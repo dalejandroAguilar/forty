@@ -7,56 +7,56 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class ImageEntity extends Image {
-    protected TextureRegionDrawable texture75, texture100, texture150, texture200, texture300;
-    protected Layout layout;
-    private String assetPath;
-    private String assetName;
-    private AssetManager assetManager;
+    protected TextureRegionDrawable texture50, texture75, texture100, texture150, texture200,
+            texture300, texture400;
+    protected String assetPath;
+    protected String assetName;
+    protected AssetManager assetManager;
 
-    public ImageEntity(Layout layout) {
-        this.layout = layout;
-        prepareAssets();
+    public ImageEntity() {
     }
 
-    public ImageEntity(AssetManager assetManager, String assetPath, String assetName, Layout layout) {
-        this.assetPath = assetPath;
-        this.assetName = assetName;
-        this.layout = layout;
-        this.assetManager = assetManager;
-        prepareAssets();
-    }
-
-    protected void prepareAssets() {
-        TextureAtlas atlas = assetManager.get(assetPath+"/0.75x/pack.atlas",
+    public void prepareAssets() {
+        setAssetAddress();
+        System.out.println(assetPath + "/0.5x/pack.atlas");
+        TextureAtlas atlas = assetManager.get(assetPath + "/0.5x/pack.atlas",
                 TextureAtlas.class);
+        texture50 = new TextureRegionDrawable(atlas.findRegion(assetName));
+        atlas = assetManager.get(assetPath + "/0.75x/pack.atlas", TextureAtlas.class);
         texture75 = new TextureRegionDrawable(atlas.findRegion(assetName));
-        atlas = assetManager.get(assetPath+"/1x/pack.atlas", TextureAtlas.class);
+        atlas = assetManager.get(assetPath + "/1x/pack.atlas", TextureAtlas.class);
         texture100 = new TextureRegionDrawable(atlas.findRegion(assetName));
-        atlas = assetManager.get(assetPath+"/1.5x/pack.atlas", TextureAtlas.class);
+        atlas = assetManager.get(assetPath + "/1.5x/pack.atlas", TextureAtlas.class);
         texture150 = new TextureRegionDrawable(atlas.findRegion(assetName));
-        atlas = assetManager.get(assetPath+"/2x/pack.atlas", TextureAtlas.class);
+        atlas = assetManager.get(assetPath + "/2x/pack.atlas", TextureAtlas.class);
         texture200 = new TextureRegionDrawable(atlas.findRegion(assetName));
-        atlas = assetManager.get(assetPath+"/3x/pack.atlas", TextureAtlas.class);
+        atlas = assetManager.get(assetPath + "/3x/pack.atlas", TextureAtlas.class);
+        texture300 = new TextureRegionDrawable(atlas.findRegion(assetName));
+        atlas = assetManager.get(assetPath + "/4x/pack.atlas", TextureAtlas.class);
         texture300 = new TextureRegionDrawable(atlas.findRegion(assetName));
     }
 
+    public void setAssetAddress(){
+
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-
     }
 
     public void resize(int width, int height) {
+        if (width <= Constants.WIDTH50x || height <= Constants.HEIGHT50x) {
+            resize50();
+            return;
+        }
         if (width <= Constants.WIDTH75x || height <= Constants.HEIGHT75x) {
             resize75();
             return;
         }
-
         if (width <= Constants.WIDTH1x || height <= Constants.HEIGHT1x) {
             resize100();
             return;
-
         }
         if (width <= Constants.WIDTH150x || height <= Constants.HEIGHT150x) {
             resize150();
@@ -70,6 +70,14 @@ public class ImageEntity extends Image {
             resize300();
             return;
         }
+        if (width <= Constants.WIDTH4x || height <= Constants.HEIGHT4x) {
+            resize400();
+            return;
+        }
+    }
+
+    public void resize50() {
+        setDrawable(texture50);
     }
 
     public void resize75() {
@@ -92,4 +100,15 @@ public class ImageEntity extends Image {
         setDrawable(texture300);
     }
 
+    public void resize400() {
+        setDrawable(texture400);
+    }
+
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
+
+    public void setAssetManager(AssetManager assetManager) {
+        this.assetManager = assetManager;
+    }
 }

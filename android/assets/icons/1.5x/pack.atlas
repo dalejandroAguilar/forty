@@ -1,0 +1,41 @@
+
+pack.png
+size: 512,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+back
+  rotate: false
+  xy: 294, 98
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+card
+  rotate: false
+  xy: 196, 98
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+dog
+  rotate: false
+  xy: 392, 98
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+player
+  rotate: false
+  xy: 2, 2
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+settings
+  rotate: false
+  xy: 196, 5
+  size: 91, 91
+  orig: 91, 91
+  offset: 0, 0
+  index: -1
