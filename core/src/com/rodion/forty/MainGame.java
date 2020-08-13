@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -25,22 +26,35 @@ import com.rodion.forty.screens.game.GameStage;
 public class MainGame extends Game {
     static public Color green;
     static public TextureRegionDrawable greenBg;
+    static private BitmapFont bitmapFont50x, bitmapFont75x, bitmapFont100x, bitmapFont150x, bitmapFont200x, bitmapFont300x, bitmapFont400x;
+    static public Label.LabelStyle labelStyle50x, labelStyle75x, labelStyle100x, labelStyle150x, labelStyle200x,
+            labelStyle300x, labelStyle400x;
 
     public GameScreen gameScreen;
     public AssetManager assetManagerGame;
+
     @Override
     public void create() {
+        loadColors();
+        loadFonts();
+
         assetManagerGame = new AssetManager();
         loadGameAssets();
-        loadColors();
         gameScreen = new GameScreen(this);
         setScreen(gameScreen);
     }
 
     @Override
     public void dispose() {
-        assetManagerGame.dispose();
         super.dispose();
+        assetManagerGame.dispose();
+        bitmapFont50x.dispose();
+        bitmapFont75x.dispose();
+        bitmapFont100x.dispose();
+        bitmapFont150x.dispose();
+        bitmapFont200x.dispose();
+        bitmapFont300x.dispose();
+        bitmapFont400x.dispose();
     }
 
     public void loadGameAssets() {
@@ -63,13 +77,56 @@ public class MainGame extends Game {
         assetManagerGame.finishLoading();
     }
 
-    public void loadColors(){
-        green = new Color(118/255f,150/255f,86/255f,1);
+    public void loadColors() {
+        green = new Color(118 / 255f, 150 / 255f, 86 / 255f, 1);
 
         Pixmap bgPixmap = new Pixmap(1, 1, Pixmap.Format.RGB565);
         bgPixmap.setColor(green);
         bgPixmap.fill();
-        greenBg  = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
+        greenBg = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
+    }
+
+     public void loadFonts() {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Helvetica.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.characters = "1234567890abcdefghijklmnopqrstuvwxyzáéíóúABCDEFGHIJKLMNOPQRSTUVWXYZ.";
+        bitmapFont50x = new BitmapFont();
+        parameter.size = 15;
+        bitmapFont50x = generator.generateFont(parameter);
+        bitmapFont50x = generator.generateFont(parameter);
+
+        bitmapFont75x = new BitmapFont();
+        parameter.size = 22;
+        bitmapFont75x = generator.generateFont(parameter);
+
+        bitmapFont100x = new BitmapFont();
+        parameter.size = 30;
+        bitmapFont100x = generator.generateFont(parameter);
+
+        bitmapFont150x = new BitmapFont();
+        parameter.size = 75;
+        bitmapFont150x = generator.generateFont(parameter);
+
+        bitmapFont200x = new BitmapFont();
+        parameter.size = 100;
+        bitmapFont200x = generator.generateFont(parameter);
+
+        bitmapFont300x = new BitmapFont();
+        parameter.size = 150;
+        bitmapFont300x = generator.generateFont(parameter);
+
+        bitmapFont400x = new BitmapFont();
+        parameter.size = 200;
+        bitmapFont400x = generator.generateFont(parameter);
+
+        labelStyle50x = new Label.LabelStyle(bitmapFont50x, Color.WHITE);
+        labelStyle75x = new Label.LabelStyle(bitmapFont75x, Color.WHITE);
+        labelStyle100x = new Label.LabelStyle(bitmapFont100x, Color.WHITE);
+        labelStyle150x = new Label.LabelStyle(bitmapFont150x, Color.WHITE);
+        labelStyle200x = new Label.LabelStyle(bitmapFont200x, Color.WHITE);
+        labelStyle300x = new Label.LabelStyle(bitmapFont300x, Color.WHITE);
+        labelStyle400x = new Label.LabelStyle(bitmapFont400x, Color.WHITE);
+
     }
 
 }

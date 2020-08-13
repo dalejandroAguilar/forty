@@ -40,10 +40,6 @@ public class ImageEntity extends Image {
 
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-    }
 
     public void resize(int width, int height) {
         if (width <= Constants.WIDTH50x || height <= Constants.HEIGHT50x) {
