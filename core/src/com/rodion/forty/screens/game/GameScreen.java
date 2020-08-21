@@ -22,7 +22,7 @@ public class GameScreen extends BasicScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        Gdx.gl.glClearColor(31.f / 255, 31.f / 255, 31.f / 255, 1);
+        Gdx.gl.glClearColor(49.f / 255, 46.f / 255, 43.f / 255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         gameStage.act(delta);
         gameStage.draw();

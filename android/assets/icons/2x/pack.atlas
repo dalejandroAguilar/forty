@@ -6,36 +6,50 @@ filter: Nearest,Nearest
 repeat: none
 back
   rotate: false
-  xy: 261, 262
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-card
-  rotate: false
-  xy: 2, 2
+  xy: 133, 4
   size: 129, 129
   orig: 129, 129
   offset: 0, 0
   index: -1
+card
+  rotate: false
+  xy: 264, 68
+  size: 65, 65
+  orig: 65, 65
+  offset: 0, 0
+  index: -1
 dog
   rotate: false
-  xy: 261, 132
-  size: 128, 128
-  orig: 128, 128
+  xy: 264, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+pass
+  rotate: false
+  xy: 2, 320
+  size: 351, 184
+  orig: 351, 184
   offset: 0, 0
   index: -1
 player
   rotate: false
-  xy: 2, 133
-  size: 257, 257
-  orig: 257, 257
+  xy: 355, 375
+  size: 129, 129
+  orig: 129, 129
   offset: 0, 0
   index: -1
 settings
   rotate: false
-  xy: 133, 9
-  size: 123, 122
-  orig: 123, 122
+  xy: 2, 4
+  size: 129, 129
+  orig: 129, 129
+  offset: 0, 0
+  index: -1
+take
+  rotate: false
+  xy: 2, 135
+  size: 350, 183
+  orig: 350, 183
   offset: 0, 0
   index: -1

@@ -1,7 +1,10 @@
 package com.rodion.forty.screens.game.layouts;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.rodion.forty.basics.BasicStage;
 import com.rodion.forty.basics.ImageEntity;
 import com.rodion.forty.basics.LabelEntity;
@@ -12,11 +15,14 @@ public class StatusLayout extends Layout {
     private ImageEntity cardNumberImage;
     private ImageEntity userImage;
     private LabelEntity scoreLabel;
-
+    private LabelEntity cardsCountLabel;
+    private LabelEntity playerNameLabel;
 
     public StatusLayout(final BasicStage basicStage) {
         super(basicStage);
         setFillParent(false);
+        Table table = new Table();
+        table.setFillParent(false);
         userImage  = new ImageEntity() {
             @Override
             public void setAssetAddress() {
@@ -45,17 +51,33 @@ public class StatusLayout extends Layout {
         };
         cardNumberImage.prepareAssets();
 
+
         scoreLabel = new LabelEntity("12",this);
-        add(userImage);
-        add(scoreImage);
-        add(scoreLabel);
-        add(cardNumberImage);
+        playerNameLabel = new LabelEntity("PLAYER 1 RED asdfasdfasdfasdf",this);
+        cardsCountLabel = new LabelEntity("15",this);
+//        table.debug();
+
+
+
+        table.add(playerNameLabel).colspan(4).left().row();
+        table.add(scoreImage).left();
+        table.add(scoreLabel).left();
+        table.add(cardNumberImage).left();
+        table.add(cardsCountLabel).left();
+//        table.add();
+
+
+
+        add(userImage).left();
+
+        add(table).left();
+        add().expand();
+
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        scoreLabel.draw(batch,parentAlpha);
     }
 
     @Override
@@ -65,5 +87,8 @@ public class StatusLayout extends Layout {
         scoreImage.resize(width, height);
         cardNumberImage.resize(width, height);
         scoreLabel.resize(width, height);
+        cardsCountLabel.resize(width, height);
+        playerNameLabel.resize(width, height);
+        System.out.println(scoreImage.getWidth());
     }
 }

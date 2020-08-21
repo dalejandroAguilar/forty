@@ -24,8 +24,8 @@ import com.rodion.forty.screens.game.GameScreen;
 import com.rodion.forty.screens.game.GameStage;
 
 public class MainGame extends Game {
-    static public Color green;
-    static public TextureRegionDrawable greenBg;
+    static public Color green, gray, grayTrans;
+    static public TextureRegionDrawable greenBg, grayBg, grayTransBg;
     static private BitmapFont bitmapFont50x, bitmapFont75x, bitmapFont100x, bitmapFont150x, bitmapFont200x, bitmapFont300x, bitmapFont400x;
     static public Label.LabelStyle labelStyle50x, labelStyle75x, labelStyle100x, labelStyle150x, labelStyle200x,
             labelStyle300x, labelStyle400x;
@@ -84,6 +84,16 @@ public class MainGame extends Game {
         bgPixmap.setColor(green);
         bgPixmap.fill();
         greenBg = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
+
+        gray = new Color(0.16f, 37 / 255f, 34 / 255f, 1);
+        bgPixmap.setColor(gray);
+        bgPixmap.fill();
+        grayBg = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
+
+        grayTrans = new Color(0.16f, 37 / 255f, 34 / 255f, 0.75f);
+        bgPixmap.setColor(grayTrans);
+        bgPixmap.fill();
+        grayTransBg = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
     }
 
      public void loadFonts() {
