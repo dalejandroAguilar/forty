@@ -22,8 +22,10 @@ public class StatusLayout extends Layout {
         super(basicStage);
         setFillParent(false);
         Table table = new Table();
+        Table bottomTable = new Table();
+        bottomTable.setFillParent(false);
         table.setFillParent(false);
-        userImage  = new ImageEntity() {
+        userImage = new ImageEntity() {
             @Override
             public void setAssetAddress() {
                 setAssetManager(basicStage.getParentScreen().getMainGame().assetManagerGame);
@@ -52,22 +54,18 @@ public class StatusLayout extends Layout {
         cardNumberImage.prepareAssets();
 
 
-        scoreLabel = new LabelEntity("12",this);
-        playerNameLabel = new LabelEntity("PLAYER 1 RED asdfasdfasdfasdf",this);
-        cardsCountLabel = new LabelEntity("15",this);
+        scoreLabel = new LabelEntity("12", this);
+        playerNameLabel = new LabelEntity("PLAYER 1 RED asdfasdfasdfasdf", this);
+        cardsCountLabel = new LabelEntity("15", this);
 //        table.debug();
 
 
-
-        table.add(playerNameLabel).colspan(4).left().row();
-        table.add(scoreImage).left();
-        table.add(scoreLabel).left();
-        table.add(cardNumberImage).left();
-        table.add(cardsCountLabel).left();
-//        table.add();
-
-
-
+        table.add(playerNameLabel).left().row();
+        bottomTable.add(scoreImage).left();
+        bottomTable.add(scoreLabel).left().width(100);
+        bottomTable.add(cardNumberImage).left();
+        bottomTable.add(cardsCountLabel).left().width(100);
+        table.add(bottomTable).left();
         add(userImage).left();
 
         add(table).left();
@@ -89,6 +87,5 @@ public class StatusLayout extends Layout {
         scoreLabel.resize(width, height);
         cardsCountLabel.resize(width, height);
         playerNameLabel.resize(width, height);
-        System.out.println(scoreImage.getWidth());
     }
 }

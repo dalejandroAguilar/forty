@@ -22,6 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.rodion.forty.screens.game.GameScreen;
 import com.rodion.forty.screens.game.GameStage;
+import com.rodion.forty.screens.loading.LoadingScreen;
+import com.rodion.forty.screens.presentation.LaunchScreen;
 
 public class MainGame extends Game {
     static public Color green, gray, grayTrans;
@@ -31,7 +33,10 @@ public class MainGame extends Game {
             labelStyle300x, labelStyle400x;
 
     public GameScreen gameScreen;
+    public LaunchScreen launchScreen;
     public AssetManager assetManagerGame;
+    public AssetManager assetManagerLoading;
+    public LoadingScreen loadingScreen;
 
     @Override
     public void create() {
@@ -39,15 +44,21 @@ public class MainGame extends Game {
         loadFonts();
 
         assetManagerGame = new AssetManager();
-        loadGameAssets();
-        gameScreen = new GameScreen(this);
-        setScreen(gameScreen);
+        assetManagerLoading = new AssetManager();
+        loadLoadingAssets();
+        loadingScreen = new LoadingScreen(this);
+//        assetManagerLoading.is
+//        loadGameAssets();
+//        gameScreen = new GameScreen(this);
+        launchScreen = new LaunchScreen(this);
+        setScreen(loadingScreen);
     }
 
     @Override
     public void dispose() {
         super.dispose();
         assetManagerGame.dispose();
+        assetManagerLoading.dispose();
         bitmapFont50x.dispose();
         bitmapFont75x.dispose();
         bitmapFont100x.dispose();
@@ -75,6 +86,18 @@ public class MainGame extends Game {
         assetManagerGame.load("icons/4x/pack.atlas", TextureAtlas.class);
 
         assetManagerGame.finishLoading();
+    }
+
+    public void loadLoadingAssets(){
+        assetManagerLoading.load("loading/0.5x/pack.atlas", TextureAtlas.class);
+        assetManagerLoading.load("loading/0.75x/pack.atlas", TextureAtlas.class);
+        assetManagerLoading.load("loading/1x/pack.atlas", TextureAtlas.class);
+        assetManagerLoading.load("loading/1.5x/pack.atlas", TextureAtlas.class);
+        assetManagerLoading.load("loading/2x/pack.atlas", TextureAtlas.class);
+        assetManagerLoading.load("loading/3x/pack.atlas", TextureAtlas.class);
+        assetManagerLoading.load("loading/4x/pack.atlas", TextureAtlas.class);
+        assetManagerLoading.finishLoading();
+
     }
 
     public void loadColors() {

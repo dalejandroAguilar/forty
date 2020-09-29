@@ -48,7 +48,7 @@ public class LabelEntity extends Label {
     }
 
     public void resize50() {
-        setStyle(layout.getParentStage().basicScreen.getMainGame().labelStyle75x);
+        setStyle(layout.getParentStage().basicScreen.getMainGame().labelStyle50x);
     }
 
     public void resize75() {

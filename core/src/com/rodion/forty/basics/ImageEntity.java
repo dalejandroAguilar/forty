@@ -33,15 +33,16 @@ public class ImageEntity extends Image {
         atlas = assetManager.get(assetPath + "/3x/pack.atlas", TextureAtlas.class);
         texture300 = new TextureRegionDrawable(atlas.findRegion(assetName));
         atlas = assetManager.get(assetPath + "/4x/pack.atlas", TextureAtlas.class);
-        texture300 = new TextureRegionDrawable(atlas.findRegion(assetName));
+        texture400 = new TextureRegionDrawable(atlas.findRegion(assetName));
     }
 
-    public void setAssetAddress(){
+    public void setAssetAddress() {
 
     }
 
 
     public void resize(int width, int height) {
+        setSize(getImageWidth(),getImageHeight());
         if (width <= Constants.WIDTH50x || height <= Constants.HEIGHT50x) {
             resize50();
             return;
@@ -78,26 +79,33 @@ public class ImageEntity extends Image {
 
     public void resize75() {
         setDrawable(texture75);
+
     }
 
     public void resize100() {
         setDrawable(texture100);
+
     }
 
     public void resize150() {
         setDrawable(texture150);
+
     }
 
     public void resize200() {
         setDrawable(texture200);
+
     }
 
     public void resize300() {
         setDrawable(texture300);
+
     }
 
     public void resize400() {
         setDrawable(texture400);
+
+
     }
 
     public AssetManager getAssetManager() {

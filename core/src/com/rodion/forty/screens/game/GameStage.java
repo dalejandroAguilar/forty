@@ -1,6 +1,8 @@
 package com.rodion.forty.screens.game;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -20,7 +22,10 @@ import com.rodion.forty.entities.CardEntity;
 import com.rodion.forty.entities.DeckEntity;
 import com.rodion.forty.screens.game.layouts.ActionLayout;
 import com.rodion.forty.screens.game.layouts.BoardLayout;
+import com.rodion.forty.screens.game.layouts.RemainerDeckLayout;
 import com.rodion.forty.screens.game.layouts.StatusLayout;
+
+import java.util.ArrayList;
 
 public class GameStage extends BasicStage {
     private DeckEntity deckEntity;
@@ -32,25 +37,43 @@ public class GameStage extends BasicStage {
     private ImageButtonEntity settingsButton;
     private ImageButtonEntity backButton;
     private ActionLayout actionLayout;
+    private RemainerDeckLayout remainerDeckLayout;
 //    pr
 
 
     public GameStage(Viewport viewport, BasicScreen basicScreen) {
         super(viewport, basicScreen);
         deckEntity = new DeckEntity(this);
+        remainerDeckLayout = new RemainerDeckLayout(this);
+        remainerDeckLayout.addCard(deckEntity.getCard(Suit.Hearts, Pip.Seven));
+        remainerDeckLayout.addCard(deckEntity.getCard(Suit.Hearts, Pip.Three));
+        remainerDeckLayout.addCard(deckEntity.getCard(Suit.Spades, Pip.Four));
+
+        ArrayList<CardEntity> cards = new ArrayList<>();
+        cards.add(deckEntity.getCard(Suit.Hearts, Pip.Seven));
+        cards.add(deckEntity.getCard(Suit.Hearts, Pip.Three));
+        cards.add(deckEntity.getCard(Suit.Spades, Pip.Four));
+        cards.add(deckEntity.getCard(Suit.Spades, Pip.Four));
+
+
+
+        deckEntity.getCard(Suit.Hearts, Pip.Seven);
+        deckEntity.getCard(Suit.Hearts, Pip.Three);
+        deckEntity.getCard(Suit.Spades, Pip.Four);
+
+
+        remainerDeckLayout.debug();
         player1DeckLayout = new HorizontalGroup();
         player2DeckLayout = new HorizontalGroup();
         player1DeckLayout.addActor(deckEntity.getCard(Suit.Clubs, Pip.Jack));
         player1DeckLayout.addActor(deckEntity.getCard(Suit.Clubs, Pip.Ace));
         player1DeckLayout.addActor(deckEntity.getCard(Suit.Spades, Pip.Ace));
         player1DeckLayout.addActor(deckEntity.getCard(Suit.Hearts, Pip.Ace));
-        player1DeckLayout.addActor(deckEntity.getCard(Suit.Hearts, Pip.Seven));
 
         player2DeckLayout.addActor(deckEntity.getCard(Suit.Clubs, Pip.Two));
-        player2DeckLayout.addActor(deckEntity.getCard(Suit.Clubs, Pip.Two));
+        player2DeckLayout.addActor(deckEntity.getCard(Suit.Hearts, Pip.Two));
         player2DeckLayout.addActor(deckEntity.getCard(Suit.Spades, Pip.Two));
-        player2DeckLayout.addActor(deckEntity.getCard(Suit.Hearts, Pip.Two));
-        player2DeckLayout.addActor(deckEntity.getCard(Suit.Hearts, Pip.Two));
+
 
         actionLayout = new ActionLayout(this);
 
@@ -81,14 +104,12 @@ public class GameStage extends BasicStage {
         backButton.prepareAssets();
 
 
-
         Table topMenu = new Table();
         topMenu.setBackground(getParentScreen().getMainGame().grayBg);
         topMenu.add(backButton).left();
         Table bottomMenu = new Table();
         bottomMenu.setBackground(getParentScreen().getMainGame().grayBg);
         bottomMenu.add(settingsButton);
-
 
 
         final DragAndDrop dnd = new DragAndDrop();
@@ -176,21 +197,31 @@ public class GameStage extends BasicStage {
         player2DeckLayout.setTouchable(Touchable.enabled);
         layout.add(topMenu).top().expandX().fillX().row();
         layout.add(statusPlayer2Layout).top().expandX().fillX().align(Align.left).padTop(Value.percentHeight(.1f)).row();
-        layout.add(player2DeckLayout).expandX().fillX().height(Value.percentHeight(1.1f,deckEntity.getCard(Suit.Clubs,Pip.Jack))).top().row();
+        layout.add(player2DeckLayout).expandX().fillX().height(Value.percentHeight(1.1f, deckEntity.getCard(Suit.Clubs, Pip.Jack))).top().row();
         layout.add(boardLayout).fill().expand().row();
-        layout.add(player1DeckLayout).expandX().fillX().height(Value.percentHeight(1.1f,deckEntity.getCard(Suit.Clubs,Pip.Jack))).bottom().row();
+        layout.add(player1DeckLayout).expandX().fillX().height(Value.percentHeight(1.1f, deckEntity.getCard(Suit.Clubs, Pip.Jack))).bottom().row();
         layout.add(statusPlayer1Layout).bottom().expandX().align(Align.left).fillX().padTop(Value.percentHeight(.1f)).row();
         layout.add(bottomMenu).bottom().expandX().fill();
         addActor(layout);
-
         addActor(actionLayout);
+        addActor(remainerDeckLayout);
 
-
+         for (CardEntity card : cards) {
+//            card.setPositionBefore(card.getX(), card.getY());
+//            player1DeckLayout.addActor(card);
+            Vector2 v= card.localToStageCoordinates(new Vector2(10, 10));
+//            card.setPositionAfter(v.x, v.y);
+            System.out.println(v.x+","+v.y);
+//            card.addAction(Actions.moveBy(card.getXafter(),card.getYafter(), 10f));
+        }
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
+        CardEntity card = deckEntity.getCard(Suit.Spades, Pip.Four);
+        Vector2 v= card.localToStageCoordinates(new Vector2(10, 10));
+        System.out.println(v.x+","+v.y);
     }
 
     @Override
@@ -206,5 +237,6 @@ public class GameStage extends BasicStage {
         settingsButton.resize(width, height);
         backButton.resize(width, height);
         actionLayout.resize(width, height);
+        remainerDeckLayout.resize(width, height);
     }
 }

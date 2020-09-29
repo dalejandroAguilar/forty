@@ -1,5 +1,5 @@
 
-deck.png
+pack.png
 size: 4096,4096
 format: RGBA8888
 filter: Nearest,Nearest
@@ -7,69 +7,69 @@ repeat: none
 back1
   rotate: false
   xy: 2, 2
-  size: 391, 554
-  orig: 391, 554
+  size: 377, 554
+  orig: 377, 554
   offset: 0, 0
   index: -1
 back2
   rotate: false
-  xy: 395, 2
-  size: 391, 554
-  orig: 391, 554
+  xy: 382, 2
+  size: 377, 554
+  orig: 377, 554
   offset: 0, 0
   index: -1
 clubs01
   rotate: false
-  xy: 788, 2
+  xy: 762, 2
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 clubs02
   rotate: false
-  xy: 1181, 2
+  xy: 1142, 2
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 clubs03
   rotate: false
-  xy: 1574, 2
+  xy: 1522, 2
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 clubs04
   rotate: false
-  xy: 1967, 2
+  xy: 1902, 2
   size: 378, 554
   orig: 378, 554
   offset: 0, 0
   index: -1
 clubs05
   rotate: false
-  xy: 2360, 2
+  xy: 2282, 2
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 clubs06
   rotate: false
-  xy: 2753, 2
+  xy: 2662, 2
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 clubs07
   rotate: false
-  xy: 3146, 2
+  xy: 3042, 2
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 clubs08
   rotate: false
-  xy: 3539, 2
+  xy: 3422, 2
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
@@ -83,63 +83,63 @@ clubs09
   index: -1
 clubs10
   rotate: false
-  xy: 395, 558
+  xy: 382, 558
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 diamonds01
   rotate: false
-  xy: 788, 558
+  xy: 762, 558
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 diamonds02
   rotate: false
-  xy: 1181, 558
+  xy: 1142, 558
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 diamonds03
   rotate: false
-  xy: 1574, 558
+  xy: 1522, 558
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 diamonds04
   rotate: false
-  xy: 1967, 558
+  xy: 1902, 558
   size: 378, 554
   orig: 378, 554
   offset: 0, 0
   index: -1
 diamonds05
   rotate: false
-  xy: 2360, 558
+  xy: 2282, 558
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 diamonds06
   rotate: false
-  xy: 2753, 558
+  xy: 2662, 558
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 diamonds07
   rotate: false
-  xy: 3146, 558
+  xy: 3042, 558
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 diamonds08
   rotate: false
-  xy: 3539, 558
+  xy: 3422, 558
   size: 378, 554
   orig: 378, 554
   offset: 0, 0
@@ -153,63 +153,63 @@ diamonds09
   index: -1
 diamonds10
   rotate: false
-  xy: 395, 1114
+  xy: 382, 1114
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 hearts01
   rotate: false
-  xy: 788, 1114
+  xy: 762, 1114
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 hearts02
   rotate: false
-  xy: 1181, 1114
+  xy: 1142, 1114
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 hearts03
   rotate: false
-  xy: 1574, 1114
+  xy: 1522, 1114
   size: 378, 554
   orig: 378, 554
   offset: 0, 0
   index: -1
 hearts04
   rotate: false
-  xy: 1967, 1114
+  xy: 1902, 1114
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 hearts05
   rotate: false
-  xy: 2360, 1114
+  xy: 2282, 1114
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 hearts06
   rotate: false
-  xy: 2753, 1114
+  xy: 2662, 1114
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 hearts07
   rotate: false
-  xy: 3146, 1114
+  xy: 3042, 1114
   size: 378, 554
   orig: 378, 554
   offset: 0, 0
   index: -1
 hearts08
   rotate: false
-  xy: 3539, 1114
+  xy: 3422, 1114
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
@@ -223,63 +223,63 @@ hearts09
   index: -1
 hearts10
   rotate: false
-  xy: 395, 1670
+  xy: 382, 1670
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 spades01
   rotate: false
-  xy: 788, 1670
+  xy: 762, 1670
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 spades02
   rotate: false
-  xy: 1181, 1670
+  xy: 1142, 1670
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 spades03
   rotate: false
-  xy: 1574, 1670
+  xy: 1522, 1670
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 spades04
   rotate: false
-  xy: 1967, 1670
+  xy: 1902, 1670
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 spades05
   rotate: false
-  xy: 2360, 1670
+  xy: 2282, 1670
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 spades06
   rotate: false
-  xy: 2753, 1670
+  xy: 2662, 1670
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 spades07
   rotate: false
-  xy: 3146, 1670
+  xy: 3042, 1670
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
   index: -1
 spades08
   rotate: false
-  xy: 3539, 1670
+  xy: 3422, 1670
   size: 378, 554
   orig: 378, 554
   offset: 0, 0
@@ -293,7 +293,7 @@ spades09
   index: -1
 spades10
   rotate: false
-  xy: 395, 2226
+  xy: 382, 2226
   size: 377, 554
   orig: 377, 554
   offset: 0, 0
