@@ -56,7 +56,7 @@ public class LabelButtonEntity extends Layout {
         );
     }
 
-    private void action(){}
+    public void action(){}
 
 
     @Override

@@ -1,10 +1,7 @@
 package com.rodion.forty.screens.game.layouts;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.rodion.forty.basics.BasicStage;
 import com.rodion.forty.basics.ImageEntity;
 import com.rodion.forty.basics.LabelEntity;
@@ -28,7 +25,7 @@ public class StatusLayout extends Layout {
         userImage = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                setAssetManager(basicStage.getParentScreen().getMainGame().assetManagerGame);
+                setAssetManager(basicStage.getParentScreen().getMainGame().amGame);
                 assetPath = "icons";
                 assetName = "player";
             }
@@ -37,7 +34,7 @@ public class StatusLayout extends Layout {
         scoreImage = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                setAssetManager(basicStage.getParentScreen().getMainGame().assetManagerGame);
+                setAssetManager(basicStage.getParentScreen().getMainGame().amGame);
                 assetPath = "icons";
                 assetName = "dog";
             }
@@ -46,7 +43,7 @@ public class StatusLayout extends Layout {
         cardNumberImage = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                setAssetManager(basicStage.getParentScreen().getMainGame().assetManagerGame);
+                setAssetManager(basicStage.getParentScreen().getMainGame().amGame);
                 assetPath = "icons";
                 assetName = "card";
             }

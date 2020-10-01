@@ -1,4 +1,4 @@
-package com.rodion.forty.basics;
+package com.rodion.forty.kernel;
 
 public enum Suit {
     Clubs("clubs", 0), Diamonds("diamonds", 1), Hearts("hearts", 2), Spades("spades", 3);

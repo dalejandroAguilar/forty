@@ -2,7 +2,6 @@ package com.rodion.forty.screens.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -16,10 +15,11 @@ import com.rodion.forty.basics.BasicScreen;
 import com.rodion.forty.basics.BasicStage;
 import com.rodion.forty.basics.ImageButtonEntity;
 import com.rodion.forty.basics.Layout;
-import com.rodion.forty.basics.Pip;
-import com.rodion.forty.basics.Suit;
 import com.rodion.forty.entities.CardEntity;
 import com.rodion.forty.entities.DeckEntity;
+import com.rodion.forty.kernel.Game;
+import com.rodion.forty.kernel.Pip;
+import com.rodion.forty.kernel.Suit;
 import com.rodion.forty.screens.game.layouts.ActionLayout;
 import com.rodion.forty.screens.game.layouts.BoardLayout;
 import com.rodion.forty.screens.game.layouts.RemainerDeckLayout;
@@ -38,6 +38,8 @@ public class GameStage extends BasicStage {
     private ImageButtonEntity backButton;
     private ActionLayout actionLayout;
     private RemainerDeckLayout remainerDeckLayout;
+
+    private Game game;
 //    pr
 
 
@@ -86,7 +88,7 @@ public class GameStage extends BasicStage {
         settingsButton = new ImageButtonEntity() {
             @Override
             public void setAssetAddress() {
-                setAssetManager(getParentScreen().getMainGame().assetManagerGame);
+                setAssetManager(getParentScreen().getMainGame().amGame);
                 assetPath = "icons";
                 assetName = "settings";
             }
@@ -96,7 +98,7 @@ public class GameStage extends BasicStage {
         backButton = new ImageButtonEntity() {
             @Override
             public void setAssetAddress() {
-                setAssetManager(getParentScreen().getMainGame().assetManagerGame);
+                setAssetManager(getParentScreen().getMainGame().amGame);
                 assetPath = "icons";
                 assetName = "back";
             }

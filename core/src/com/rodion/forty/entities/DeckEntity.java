@@ -1,12 +1,8 @@
 package com.rodion.forty.entities;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.rodion.forty.basics.BasicStage;
-import com.rodion.forty.basics.Pip;
-import com.rodion.forty.basics.Suit;
-
-import javax.smartcardio.Card;
+import com.rodion.forty.kernel.Pip;
+import com.rodion.forty.kernel.Suit;
 
 public class DeckEntity {
     private final CardEntity[][] cards;
@@ -18,7 +14,7 @@ public class DeckEntity {
                 cards[suit.index][pip.index] = new CardEntity(pip, suit) {
                     @Override
                     public void setAssetAddress() {
-                        setAssetManager(basicStage.getParentScreen().getMainGame().assetManagerGame);
+                        setAssetManager(basicStage.getParentScreen().getMainGame().amGame);
                         super.setAssetAddress();
                     }
                 };

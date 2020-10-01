@@ -1,4 +1,4 @@
-package com.rodion.forty.screens.presentation;
+package com.rodion.forty.screens.launch;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,6 +17,7 @@ public class LaunchScreen extends BasicScreen {
         super(mainGame);
         stage = new LaunchStage(new ScreenViewport(), this);
         blackStage = new BlackStage(new ScreenViewport());
+//        mainGame.loadLoadingAssets();
     }
 
 

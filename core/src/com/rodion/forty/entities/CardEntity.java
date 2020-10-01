@@ -1,17 +1,14 @@
 package com.rodion.forty.entities;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.rodion.forty.basics.ImageEntity;
-import com.rodion.forty.basics.Layout;
-import com.rodion.forty.basics.Pip;
-import com.rodion.forty.basics.Suit;
 import com.rodion.forty.basics.SwitchImageEntity;
-import com.rodion.forty.screens.game.GameScreen;
+import com.rodion.forty.kernel.Card;
+import com.rodion.forty.kernel.Pip;
+import com.rodion.forty.kernel.Suit;
 
 public class CardEntity extends SwitchImageEntity {
+    private Card card;
     Pip pip;
     Suit suit;
     private float xbefore, ybefore, xafter, yafter;
@@ -24,21 +21,6 @@ public class CardEntity extends SwitchImageEntity {
         addListener(new ClickListener() {
                         boolean isPressed;
                         boolean isClicked;
-
-//                        @Override
-//                        public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-//                            isPressed = true;
-//                            isClicked = false;
-//                            addAction(Actions.color(Color.GRAY, .2f));
-//                            return false;
-//                        }
-//
-//                        @Override
-//                        public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-//                            super.touchUp(event, x, y, pointer, button);
-//                            addAction(Actions.color(Color.WHITE, .2f));
-//                        }
-
                         @Override
                         public void clicked(InputEvent event, float x, float y) {
                             action();
@@ -55,7 +37,7 @@ public class CardEntity extends SwitchImageEntity {
     public void setAssetAddress() {
         super.setAssetAddress();
         assetPath = "deck/themes/default";
-        assetNameOn = suit.name + String.format("%02d", pip.value);
+        assetNameOn = suit.name + String.format("%02d", pip.getValue());
         assetNameOff = "back1";
         System.out.println(assetPath);
     }

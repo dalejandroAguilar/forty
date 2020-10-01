@@ -2,7 +2,6 @@ package com.rodion.forty.screens.game.layouts;
 
 import com.badlogic.gdx.utils.Align;
 import com.rodion.forty.basics.BasicStage;
-import com.rodion.forty.basics.ImageButtonEntity;
 import com.rodion.forty.basics.ImageLabelButtonEntity;
 import com.rodion.forty.basics.LabelButtonEntity;
 import com.rodion.forty.basics.LabelEntity;
@@ -28,7 +27,7 @@ public class ActionLayout extends Layout {
                 "Take","card") {
             @Override
             public void setAssetAddress() {
-                setAssetManager(getParentStage(). getParentScreen().getMainGame().assetManagerGame);
+                setAssetManager(getParentStage(). getParentScreen().getMainGame().amGame);
                 assetPath = "icons";
                 assetName = "take";
             }
@@ -41,7 +40,7 @@ public class ActionLayout extends Layout {
         ,"Pass","turn") {
             @Override
             public void setAssetAddress() {
-                setAssetManager(getParentStage(). getParentScreen().getMainGame().assetManagerGame);
+                setAssetManager(getParentStage(). getParentScreen().getMainGame().amGame);
                 assetPath = "icons";
                 assetName = "pass";
             }

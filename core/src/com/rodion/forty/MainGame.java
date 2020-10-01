@@ -1,29 +1,21 @@
 package com.rodion.forty;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.rodion.forty.screens.game.GameScreen;
-import com.rodion.forty.screens.game.GameStage;
 import com.rodion.forty.screens.loading.LoadingScreen;
-import com.rodion.forty.screens.presentation.LaunchScreen;
+import com.rodion.forty.screens.launch.LaunchScreen;
+import com.rodion.forty.screens.title.TitleScreen;
 
 public class MainGame extends Game {
     static public Color green, gray, grayTrans;
@@ -34,30 +26,37 @@ public class MainGame extends Game {
 
     public GameScreen gameScreen;
     public LaunchScreen launchScreen;
-    public AssetManager assetManagerGame;
+    public AssetManager amGame;
     public AssetManager assetManagerLoading;
+    public AssetManager assetManagerTitle;
+
     public LoadingScreen loadingScreen;
+    public TitleScreen titleScreen;
+
 
     @Override
     public void create() {
         loadColors();
         loadFonts();
 
-        assetManagerGame = new AssetManager();
+        amGame = new AssetManager();
+        assetManagerTitle = new AssetManager();
         assetManagerLoading = new AssetManager();
         loadLoadingAssets();
-        loadingScreen = new LoadingScreen(this);
+        loadTitleAssets();
+        loadGameAssets();
+//        loadingScreen = new LoadingScreen(this);
 //        assetManagerLoading.is
 //        loadGameAssets();
 //        gameScreen = new GameScreen(this);
         launchScreen = new LaunchScreen(this);
-        setScreen(loadingScreen);
+        setScreen(launchScreen);
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        assetManagerGame.dispose();
+        amGame.dispose();
         assetManagerLoading.dispose();
         bitmapFont50x.dispose();
         bitmapFont75x.dispose();
@@ -69,23 +68,23 @@ public class MainGame extends Game {
     }
 
     public void loadGameAssets() {
-        assetManagerGame.load("deck/themes/default/0.5x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("deck/themes/default/0.75x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("deck/themes/default/1x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("deck/themes/default/1.5x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("deck/themes/default/2x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("deck/themes/default/3x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("deck/themes/default/4x/pack.atlas", TextureAtlas.class);
+        amGame.load("deck/themes/default/0.5x/pack.atlas", TextureAtlas.class);
+        amGame.load("deck/themes/default/0.75x/pack.atlas", TextureAtlas.class);
+        amGame.load("deck/themes/default/1x/pack.atlas", TextureAtlas.class);
+        amGame.load("deck/themes/default/1.5x/pack.atlas", TextureAtlas.class);
+        amGame.load("deck/themes/default/2x/pack.atlas", TextureAtlas.class);
+        amGame.load("deck/themes/default/3x/pack.atlas", TextureAtlas.class);
+        amGame.load("deck/themes/default/4x/pack.atlas", TextureAtlas.class);
 
-        assetManagerGame.load("icons/0.5x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("icons/0.75x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("icons/1x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("icons/1.5x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("icons/2x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("icons/3x/pack.atlas", TextureAtlas.class);
-        assetManagerGame.load("icons/4x/pack.atlas", TextureAtlas.class);
+        amGame.load("icons/0.5x/pack.atlas", TextureAtlas.class);
+        amGame.load("icons/0.75x/pack.atlas", TextureAtlas.class);
+        amGame.load("icons/1x/pack.atlas", TextureAtlas.class);
+        amGame.load("icons/1.5x/pack.atlas", TextureAtlas.class);
+        amGame.load("icons/2x/pack.atlas", TextureAtlas.class);
+        amGame.load("icons/3x/pack.atlas", TextureAtlas.class);
+        amGame.load("icons/4x/pack.atlas", TextureAtlas.class);
 
-        assetManagerGame.finishLoading();
+        amGame.finishLoading();
     }
 
     public void loadLoadingAssets(){
@@ -97,6 +96,17 @@ public class MainGame extends Game {
         assetManagerLoading.load("loading/3x/pack.atlas", TextureAtlas.class);
         assetManagerLoading.load("loading/4x/pack.atlas", TextureAtlas.class);
         assetManagerLoading.finishLoading();
+    }
+
+    public void loadTitleAssets(){
+        assetManagerTitle.load("title/0.5x/pack.atlas", TextureAtlas.class);
+        assetManagerTitle.load("title/0.75x/pack.atlas", TextureAtlas.class);
+        assetManagerTitle.load("title/1x/pack.atlas", TextureAtlas.class);
+        assetManagerTitle.load("title/1.5x/pack.atlas", TextureAtlas.class);
+        assetManagerTitle.load("title/2x/pack.atlas", TextureAtlas.class);
+        assetManagerTitle.load("title/3x/pack.atlas", TextureAtlas.class);
+        assetManagerTitle.load("title/4x/pack.atlas", TextureAtlas.class);
+        assetManagerTitle.finishLoading();
 
     }
 
