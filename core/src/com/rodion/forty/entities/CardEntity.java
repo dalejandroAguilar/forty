@@ -1,14 +1,16 @@
 package com.rodion.forty.entities;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.rodion.forty.basics.SwitchImageEntity;
+import com.rodion.forty.basics.TriphaseImageEntity;
 import com.rodion.forty.kernel.Card;
 import com.rodion.forty.kernel.Pip;
 import com.rodion.forty.kernel.Suit;
 
-public class CardEntity extends SwitchImageEntity {
-    private Card card;
+public class CardEntity extends TriphaseImageEntity {
     Pip pip;
     Suit suit;
     private float xbefore, ybefore, xafter, yafter;
@@ -33,20 +35,20 @@ public class CardEntity extends SwitchImageEntity {
         yafter=0;
     }
 
+
     @Override
     public void setAssetAddress() {
         super.setAssetAddress();
         assetPath = "deck/themes/default";
-        assetNameOn = suit.name + String.format("%02d", pip.getValue());
-        assetNameOff = "back1";
-        System.out.println(assetPath);
+        assetName1 = suit.name + String.format("%02d", pip.getValue());
+        assetName2 = "back1";
+        assetName3 = "back2";
     }
 
     public void action() {
-        if (status == 1)
+        status++;
+        if (status == 3)
             status = 0;
-        else
-            status = 1;
         update();
     }
 
@@ -58,6 +60,24 @@ public class CardEntity extends SwitchImageEntity {
     public void setPositionAfter(float x, float y){
         xafter = x;
         yafter = y;
+    }
+
+    public void catchBeforePosition(){
+        xbefore = localToStageCoordinates(new Vector2(0, 0)).x;
+        ybefore = localToStageCoordinates(new Vector2(0, 0)).y;
+    }
+
+    public void catchAfterPosition(){
+        xafter = localToStageCoordinates(new Vector2(0, 0)).x;
+        yafter = localToStageCoordinates(new Vector2(0, 0)).y;
+    }
+
+    public void moveAction(){
+        float deltax = xafter-xbefore, deltay =  yafter-ybefore;
+
+        moveBy(-deltax, -deltay);
+
+        addAction(Actions.moveBy(deltax,deltay,0.5f));
     }
 
     public float getXbefore() {

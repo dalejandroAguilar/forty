@@ -1,11 +1,12 @@
 package com.rodion.forty.screens.game;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
@@ -17,11 +18,15 @@ import com.rodion.forty.basics.ImageButtonEntity;
 import com.rodion.forty.basics.Layout;
 import com.rodion.forty.entities.CardEntity;
 import com.rodion.forty.entities.DeckEntity;
+import com.rodion.forty.kernel.Card;
 import com.rodion.forty.kernel.Game;
 import com.rodion.forty.kernel.Pip;
+import com.rodion.forty.kernel.Player;
 import com.rodion.forty.kernel.Suit;
+import com.rodion.forty.kernel.Team;
 import com.rodion.forty.screens.game.layouts.ActionLayout;
 import com.rodion.forty.screens.game.layouts.BoardLayout;
+import com.rodion.forty.screens.game.layouts.PlayerHandLayout;
 import com.rodion.forty.screens.game.layouts.RemainerDeckLayout;
 import com.rodion.forty.screens.game.layouts.StatusLayout;
 
@@ -30,8 +35,8 @@ import java.util.ArrayList;
 public class GameStage extends BasicStage {
     private DeckEntity deckEntity;
     private BoardLayout boardLayout;
-    private HorizontalGroup player1DeckLayout;
-    private HorizontalGroup player2DeckLayout;
+    private PlayerHandLayout player1DeckLayout;
+    private PlayerHandLayout player2DeckLayout;
     private StatusLayout statusPlayer1Layout;
     private StatusLayout statusPlayer2Layout;
     private ImageButtonEntity settingsButton;
@@ -43,38 +48,81 @@ public class GameStage extends BasicStage {
 //    pr
 
 
-    public GameStage(Viewport viewport, BasicScreen basicScreen) {
+    public GameStage(Viewport viewport, BasicScreen basicScreen) throws Exception {
         super(viewport, basicScreen);
         deckEntity = new DeckEntity(this);
+
+        final Player player1 = new Player();
+        final Player player2 = new Player();
+
+        Team team1 = new Team(player1);
+        Team team2 = new Team(player2);
+
+        game = new Game(team1, team2);
+        player1DeckLayout = new PlayerHandLayout(player1, deckEntity);
+        player2DeckLayout = new PlayerHandLayout(player2, deckEntity);
+
         remainerDeckLayout = new RemainerDeckLayout(this);
-        remainerDeckLayout.addCard(deckEntity.getCard(Suit.Hearts, Pip.Seven));
-        remainerDeckLayout.addCard(deckEntity.getCard(Suit.Hearts, Pip.Three));
-        remainerDeckLayout.addCard(deckEntity.getCard(Suit.Spades, Pip.Four));
+        for (int i = 0; i < 5; i++) {
+            CardEntity card1 = deckEntity.getCard(player1.getHand().getDeck().get(i));
+            card1.setStatus(1);
+            remainerDeckLayout.addCard(card1);
+            CardEntity card2 = deckEntity.getCard(player2.getHand().getDeck().get(i));
+            card2.setStatus(2);
+            remainerDeckLayout.addCard(card2);
+        }
+
+
+
+        addAction(
+                Actions.sequence(
+                        Actions.delay(.00001f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (Card card : player1.getHand().getDeck()) {
+                                    deckEntity.getCard(card).catchBeforePosition();
+                                    System.out.println(deckEntity.getCard(card).getXbefore());
+                                }
+                                for (Card card : player2.getHand().getDeck()) {
+                                    deckEntity.getCard(card).catchBeforePosition();
+                                    System.out.println(deckEntity.getCard(card).getXbefore());
+                                }
+                                player1DeckLayout.setUp();
+                                player2DeckLayout.setUp();
+
+                            }
+                        }),
+//                        Actions.delay(.000001f),
+                        Actions.run(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (Card card : player1.getHand().getDeck()) {
+                                    deckEntity.getCard(card).catchAfterPosition();
+                                    System.out.println(deckEntity.getCard(card).getXafter());
+                                    deckEntity.getCard(card).moveAction();
+                                }
+                                for (Card card : player2.getHand().getDeck()) {
+                                    deckEntity.getCard(card).catchAfterPosition();
+                                    System.out.println(deckEntity.getCard(card).getXafter());
+                                    deckEntity.getCard(card).moveAction();
+                                }
+                            }
+                        })
+                )
+        );
 
         ArrayList<CardEntity> cards = new ArrayList<>();
         cards.add(deckEntity.getCard(Suit.Hearts, Pip.Seven));
         cards.add(deckEntity.getCard(Suit.Hearts, Pip.Three));
         cards.add(deckEntity.getCard(Suit.Spades, Pip.Four));
         cards.add(deckEntity.getCard(Suit.Spades, Pip.Four));
-
-
-
-        deckEntity.getCard(Suit.Hearts, Pip.Seven);
-        deckEntity.getCard(Suit.Hearts, Pip.Three);
-        deckEntity.getCard(Suit.Spades, Pip.Four);
+        remainerDeckLayout.addCard(deckEntity.getCard(Suit.Clubs, Pip.Jack));
 
 
         remainerDeckLayout.debug();
-        player1DeckLayout = new HorizontalGroup();
-        player2DeckLayout = new HorizontalGroup();
-        player1DeckLayout.addActor(deckEntity.getCard(Suit.Clubs, Pip.Jack));
-        player1DeckLayout.addActor(deckEntity.getCard(Suit.Clubs, Pip.Ace));
-        player1DeckLayout.addActor(deckEntity.getCard(Suit.Spades, Pip.Ace));
-        player1DeckLayout.addActor(deckEntity.getCard(Suit.Hearts, Pip.Ace));
-
-        player2DeckLayout.addActor(deckEntity.getCard(Suit.Clubs, Pip.Two));
-        player2DeckLayout.addActor(deckEntity.getCard(Suit.Hearts, Pip.Two));
-        player2DeckLayout.addActor(deckEntity.getCard(Suit.Spades, Pip.Two));
+//        player1DeckLayout.setUp();
+//        player2DeckLayout.setUp();
 
 
         actionLayout = new ActionLayout(this);
@@ -208,22 +256,21 @@ public class GameStage extends BasicStage {
         addActor(actionLayout);
         addActor(remainerDeckLayout);
 
-         for (CardEntity card : cards) {
+        for (CardEntity card : cards) {
 //            card.setPositionBefore(card.getX(), card.getY());
 //            player1DeckLayout.addActor(card);
-            Vector2 v= card.localToStageCoordinates(new Vector2(10, 10));
-//            card.setPositionAfter(v.x, v.y);
-            System.out.println(v.x+","+v.y);
+            Vector2 v = card.localToStageCoordinates(new Vector2(10, 10));
+//            card.setPositionAfter(v.x, v.y)
 //            card.addAction(Actions.moveBy(card.getXafter(),card.getYafter(), 10f));
         }
     }
+
 
     @Override
     public void act(float delta) {
         super.act(delta);
         CardEntity card = deckEntity.getCard(Suit.Spades, Pip.Four);
-        Vector2 v= card.localToStageCoordinates(new Vector2(10, 10));
-        System.out.println(v.x+","+v.y);
+        Vector2 v = card.localToStageCoordinates(new Vector2(10, 10));
     }
 
     @Override
@@ -240,5 +287,9 @@ public class GameStage extends BasicStage {
         backButton.resize(width, height);
         actionLayout.resize(width, height);
         remainerDeckLayout.resize(width, height);
+    }
+
+    public void dealCards() {
+
     }
 }

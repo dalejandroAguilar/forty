@@ -1,20 +1,18 @@
 package com.rodion.forty.kernel;
 
-import java.util.ArrayList;
+public class Team {
 
-public class Equipo {
-
-    private Jugador jugador1;
-    private Jugador jugador2;
+    private Player jugador1;
+    private Player jugador2;
     private int puntaje;
     private int cartasGanadas;
     private final boolean esPareja;
 
-    public Jugador getJugador1() {
+    public Player getJugador1() {
         return jugador1;
     }
 
-    public Jugador getJugador2() {
+    public Player getJugador2() {
         return jugador2;
     }
 
@@ -26,7 +24,7 @@ public class Equipo {
         return cartasGanadas;
     }
 
-    public Equipo(Jugador j1){
+    public Team(Player j1){
         puntaje=0;
         cartasGanadas=0;
         jugador1=j1;
@@ -34,7 +32,7 @@ public class Equipo {
         esPareja=false;
     }
 
-    public Equipo(Jugador j1, Jugador j2){
+    public Team(Player j1, Player j2){
         puntaje=0;
         cartasGanadas=0;
         jugador1=j1;

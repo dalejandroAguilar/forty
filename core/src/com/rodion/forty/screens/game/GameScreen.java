@@ -13,7 +13,7 @@ import com.rodion.forty.entities.CardEntity;
 public class GameScreen extends BasicScreen {
     private GameStage gameStage;
 
-    public GameScreen(MainGame mainGame) {
+    public GameScreen(MainGame mainGame) throws Exception {
         super(mainGame);
         gameStage = new GameStage(new ScreenViewport(), this);
         Gdx.input.setInputProcessor(gameStage);

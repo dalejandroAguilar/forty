@@ -40,7 +40,11 @@ public class LabelButtonEntity extends Layout {
                             super.touchUp(event, x, y, pointer, button);
                             addAction(Actions.color(Color.WHITE, .2f));
                             if (isPressed) {
-                                action();
+                                try {
+                                    action();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
 
@@ -56,7 +60,7 @@ public class LabelButtonEntity extends Layout {
         );
     }
 
-    public void action(){}
+    public void action() throws Exception {}
 
 
     @Override

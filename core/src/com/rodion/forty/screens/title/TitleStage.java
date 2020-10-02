@@ -29,7 +29,7 @@ public class TitleStage extends BasicStage {
 
         button = new LabelButtonEntity("Jugar", getParentScreen().getMainGame().greenBg,this){
             @Override
-            public void action() {
+            public void action() throws Exception {
                 basicScreen.hide();
                 basicScreen.getMainGame().gameScreen = new GameScreen(basicScreen.getMainGame());
                 basicScreen.getMainGame().setScreen(basicScreen.getMainGame().gameScreen);

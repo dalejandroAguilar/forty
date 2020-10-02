@@ -2,23 +2,23 @@ package com.rodion.forty.kernel;
 
 import java.util.ArrayList;
 
-public class Jugador {
+public class Player {
 
-    private Baraja mano;
+    private Deck mano;
 
-    public Jugador(){
-        mano=new Baraja();
+    public Player(){
+        mano=new Deck();
     }
 
-    public Baraja getMano() {
+    public Deck getHand() {
         return mano;
     }
 
-    public int turno(Card c, Baraja mazo){
+    public int turno(Card c, Deck mazo){
         int retorno=0;
         int valor=c.getNumero().getValue();
-        ArrayList<Baraja> opciones=mazo.buscarSuma(valor);
-        Baraja aux= mazo.buscarEscalera(valor);
+        ArrayList<Deck> opciones=mazo.buscarSuma(valor);
+        Deck aux= mazo.buscarEscalera(valor);
         if (aux != null){
             opciones.add(aux);
         }
@@ -34,7 +34,7 @@ public class Jugador {
         else {
             int indice=0;
             int cartas=0;
-            for (Baraja m:opciones) {
+            for (Deck m:opciones) {
                 if(m.getDeck().size()>cartas){
                     cartas=m.getDeck().size();
                     indice=opciones.indexOf(m);

@@ -1,6 +1,7 @@
 package com.rodion.forty.entities;
 
 import com.rodion.forty.basics.BasicStage;
+import com.rodion.forty.kernel.Card;
 import com.rodion.forty.kernel.Pip;
 import com.rodion.forty.kernel.Suit;
 
@@ -24,6 +25,10 @@ public class DeckEntity {
 
     public CardEntity getCard(Suit suit, Pip pip) {
         return cards[suit.index][pip.index];
+    }
+
+    public CardEntity getCard(Card card){
+        return cards[card.getPalo().index][card.getNumero().index];
     }
 
     public void resize(int width, int height){
