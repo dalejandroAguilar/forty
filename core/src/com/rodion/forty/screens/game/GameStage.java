@@ -73,23 +73,35 @@ public class GameStage extends BasicStage {
         remainerDeckLayout = new RemainerDeckLayout(this);
         for (int i = 4; i >= 0; i--) {
             CardEntity card2 = deckEntity.getCard(player2.getHand().getDeck().get(i));
-            card2.setStatus(2);
+            card2.setBack(2);
             remainerDeckLayout.addCard(card2);
             CardEntity card1 = deckEntity.getCard(player1.getHand().getDeck().get(i));
-            card1.setStatus(1);
+            card1.setBack(1);
             remainerDeckLayout.addCard(card1);
         }
         remainerDeckLayout.addCard(deckEntity.getCard(Suit.Clubs, Pip.Jack));
 
 
-        actionLayout = new
-
-                ActionLayout(this);
+        actionLayout = new ActionLayout(this){
+            @Override
+            public void onConfirm() {
+                super.onConfirm();
+                addAction(
+                        Actions.run(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        System.out.println("Confirm");
+                                    }
+                                }
+                        )
+                );
+            }
+        };
 
         Layout layout = new Layout(this);
-        boardLayout = new
+        boardLayout = new BoardLayout(this);
 
-                BoardLayout(this);
         boardLayout.setTouchable(Touchable.enabled);
 
         statusPlayer1Layout = new
@@ -129,25 +141,17 @@ public class GameStage extends BasicStage {
         };
         backButton.prepareAssets();
 
-
         Table topMenu = new Table();
         topMenu.setBackground(
-
                 getParentScreen().
-
                         getMainGame().grayBg);
-        topMenu.add(backButton).
-
-                left();
+        topMenu.add(backButton).left();
 
         Table bottomMenu = new Table();
         bottomMenu.setBackground(
-
                 getParentScreen().
-
                         getMainGame().grayBg);
         bottomMenu.add(settingsButton);
-
 
         final DragAndDrop dnd = new DragAndDrop();
         dnd.setDragActorPosition(-deckEntity.getCard(Suit.Clubs, Pip.Jack).
@@ -236,18 +240,12 @@ public class GameStage extends BasicStage {
         });
 
         player1DeckLayout.wrap().
-
                 align(Align.center).
-
                 wrapSpace(10).
-
                 space(10);
         player2DeckLayout.wrap().
-
                 align(Align.center).
-
                 wrapSpace(10).
-
                 space(10);
 
         player1DeckLayout.setFillParent(false);
@@ -386,7 +384,7 @@ public class GameStage extends BasicStage {
                     })
             );
             dealCardsAnimation.addAction(
-                    Actions.delay(0.25f)
+                    Actions.delay(0.025f)
             );
             dealCardsAnimation.addAction(
                     Actions.run(new Runnable() {
@@ -399,10 +397,8 @@ public class GameStage extends BasicStage {
             );
         }
         dealCardsAnimation.addAction(
-                Actions.delay(0.25f)
+                Actions.delay(0.025f)
         );
-
         mainActionSequence.addAction(dealCardsAnimation);
     }
-
 }

@@ -13,6 +13,7 @@ import com.rodion.forty.kernel.Suit;
 public class CardEntity extends TriphaseImageEntity {
     Pip pip;
     Suit suit;
+    int back;
     private float xbefore, ybefore, xafter, yafter;
 
     public CardEntity(Pip pip, Suit suit) {
@@ -96,5 +97,14 @@ public class CardEntity extends TriphaseImageEntity {
 
     public float getYafter() {
         return yafter;
+    }
+
+    public int getBack() {
+        return back;
+    }
+
+    public void setBack(int back) {
+        this.back = back;
+        setStatus(back);
     }
 }

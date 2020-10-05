@@ -1,5 +1,6 @@
 package com.rodion.forty.screens.game.layouts;
 
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.rodion.forty.basics.BasicStage;
 import com.rodion.forty.basics.Layout;
@@ -23,9 +24,11 @@ public class PlayerHandLayout extends HorizontalGroup {
         }
     }
 
-    public void resize(int width, int height) {
-
+    public SequenceAction flip(){
+        SequenceAction sequence = new SequenceAction();
+        for (Card card : player.getHand().getDeck()) {
+            addActor(deckEntity.getCard(card));
+        }
+        return sequence;
     }
-
-
 }

@@ -21,7 +21,13 @@ public class ActionLayout extends Layout {
         super(basicStage);
         messageEntity = new MessageEntity(basicStage);
         messageLabel = new LabelEntity("Comenzar turno", this);
-        button = new LabelButtonEntity("Listo", basicStage.getParentScreen().getMainGame().greenBg, basicStage);
+        button = new LabelButtonEntity("Listo", basicStage.getParentScreen().getMainGame().greenBg, basicStage){
+            @Override
+            public void action() throws Exception {
+                super.action();
+                onConfirm();
+            }
+        };
         messageEntity.add(messageLabel).pad(10).row();
         messageEntity.add(button).pad(10).expandX().fillX();
         takeButton = new ImageLabelButtonEntity(Align.left, getParentStage().getParentScreen()
@@ -85,4 +91,9 @@ public class ActionLayout extends Layout {
         );
         return sequence;
     }
+
+    public void onConfirm(){
+    }
+
+
 }
