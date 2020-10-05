@@ -74,10 +74,12 @@ public class CardEntity extends TriphaseImageEntity {
 
     public void moveAction(){
         float deltax = xafter-xbefore, deltay =  yafter-ybefore;
-
-        moveBy(-deltax, -deltay);
-
         addAction(Actions.moveBy(deltax,deltay,0.5f));
+    }
+
+    public void restoreMove(){
+        float deltax = xafter-xbefore, deltay =  yafter-ybefore;
+        moveBy(-deltax, -deltay);
     }
 
     public float getXbefore() {

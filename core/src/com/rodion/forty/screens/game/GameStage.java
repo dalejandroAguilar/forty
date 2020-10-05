@@ -1,17 +1,18 @@
 package com.rodion.forty.screens.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.rodion.forty.MainGame;
 import com.rodion.forty.basics.BasicScreen;
 import com.rodion.forty.basics.BasicStage;
 import com.rodion.forty.basics.ImageButtonEntity;
@@ -43,95 +44,61 @@ public class GameStage extends BasicStage {
     private ImageButtonEntity backButton;
     private ActionLayout actionLayout;
     private RemainerDeckLayout remainerDeckLayout;
-
     private Game game;
+    private Team team1;
+    private Team team2;
+    private Player player1;
+    private Player player2;
+    private SequenceAction mainActionSequence;
+
 //    pr
 
 
     public GameStage(Viewport viewport, BasicScreen basicScreen) throws Exception {
         super(viewport, basicScreen);
         deckEntity = new DeckEntity(this);
+        mainActionSequence = new SequenceAction();
 
-        final Player player1 = new Player();
-        final Player player2 = new Player();
+        player1 = new Player();
+        player2 = new Player();
 
-        Team team1 = new Team(player1);
-        Team team2 = new Team(player2);
+        team1 = new Team(player1);
+        team2 = new Team(player2);
 
         game = new Game(team1, team2);
         player1DeckLayout = new PlayerHandLayout(player1, deckEntity);
         player2DeckLayout = new PlayerHandLayout(player2, deckEntity);
+//        player1DeckLayout.toFront();
 
         remainerDeckLayout = new RemainerDeckLayout(this);
-        for (int i = 0; i < 5; i++) {
-            CardEntity card1 = deckEntity.getCard(player1.getHand().getDeck().get(i));
-            card1.setStatus(1);
-            remainerDeckLayout.addCard(card1);
+        for (int i = 4; i >= 0; i--) {
             CardEntity card2 = deckEntity.getCard(player2.getHand().getDeck().get(i));
             card2.setStatus(2);
             remainerDeckLayout.addCard(card2);
+            CardEntity card1 = deckEntity.getCard(player1.getHand().getDeck().get(i));
+            card1.setStatus(1);
+            remainerDeckLayout.addCard(card1);
         }
-
-
-
-        addAction(
-                Actions.sequence(
-                        Actions.delay(.00001f),
-                        Actions.run(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (Card card : player1.getHand().getDeck()) {
-                                    deckEntity.getCard(card).catchBeforePosition();
-                                    System.out.println(deckEntity.getCard(card).getXbefore());
-                                }
-                                for (Card card : player2.getHand().getDeck()) {
-                                    deckEntity.getCard(card).catchBeforePosition();
-                                    System.out.println(deckEntity.getCard(card).getXbefore());
-                                }
-                                player1DeckLayout.setUp();
-                                player2DeckLayout.setUp();
-
-                            }
-                        }),
-//                        Actions.delay(.000001f),
-                        Actions.run(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (Card card : player1.getHand().getDeck()) {
-                                    deckEntity.getCard(card).catchAfterPosition();
-                                    System.out.println(deckEntity.getCard(card).getXafter());
-                                    deckEntity.getCard(card).moveAction();
-                                }
-                                for (Card card : player2.getHand().getDeck()) {
-                                    deckEntity.getCard(card).catchAfterPosition();
-                                    System.out.println(deckEntity.getCard(card).getXafter());
-                                    deckEntity.getCard(card).moveAction();
-                                }
-                            }
-                        })
-                )
-        );
-
-        ArrayList<CardEntity> cards = new ArrayList<>();
-        cards.add(deckEntity.getCard(Suit.Hearts, Pip.Seven));
-        cards.add(deckEntity.getCard(Suit.Hearts, Pip.Three));
-        cards.add(deckEntity.getCard(Suit.Spades, Pip.Four));
-        cards.add(deckEntity.getCard(Suit.Spades, Pip.Four));
         remainerDeckLayout.addCard(deckEntity.getCard(Suit.Clubs, Pip.Jack));
 
 
-        remainerDeckLayout.debug();
-//        player1DeckLayout.setUp();
-//        player2DeckLayout.setUp();
+        actionLayout = new
 
-
-        actionLayout = new ActionLayout(this);
+                ActionLayout(this);
 
         Layout layout = new Layout(this);
-        boardLayout = new BoardLayout(this);
+        boardLayout = new
+
+                BoardLayout(this);
         boardLayout.setTouchable(Touchable.enabled);
-        statusPlayer1Layout = new StatusLayout(this);
-        statusPlayer2Layout = new StatusLayout(this);
+
+        statusPlayer1Layout = new
+
+                StatusLayout(this);
+
+        statusPlayer2Layout = new
+
+                StatusLayout(this);
 
         settingsButton = new ImageButtonEntity() {
             @Override
@@ -150,22 +117,45 @@ public class GameStage extends BasicStage {
                 assetPath = "icons";
                 assetName = "back";
             }
+
+            @Override
+            public void action() {
+                super.action();
+                MainGame mg = getParentScreen().getMainGame();
+                getParentScreen().hide();
+                mg.setScreen(mg.titleScreen);
+//                getParentScreen()
+            }
         };
         backButton.prepareAssets();
 
 
         Table topMenu = new Table();
-        topMenu.setBackground(getParentScreen().getMainGame().grayBg);
-        topMenu.add(backButton).left();
+        topMenu.setBackground(
+
+                getParentScreen().
+
+                        getMainGame().grayBg);
+        topMenu.add(backButton).
+
+                left();
+
         Table bottomMenu = new Table();
-        bottomMenu.setBackground(getParentScreen().getMainGame().grayBg);
+        bottomMenu.setBackground(
+
+                getParentScreen().
+
+                        getMainGame().grayBg);
         bottomMenu.add(settingsButton);
 
 
         final DragAndDrop dnd = new DragAndDrop();
-        dnd.setDragActorPosition(-deckEntity.getCard(Suit.Clubs, Pip.Jack).getWidth(), 0);
+        dnd.setDragActorPosition(-deckEntity.getCard(Suit.Clubs, Pip.Jack).
 
-        for (Suit suit : Suit.values()) {
+                getWidth(), 0);
+
+        for (
+                Suit suit : Suit.values()) {
             for (Pip pip : Pip.values()) {
                 dnd.addSource(new DragAndDrop.Source(deckEntity.getCard(suit, pip)) {
                     final DragAndDrop.Payload payload = new DragAndDrop.Payload();
@@ -198,13 +188,15 @@ public class GameStage extends BasicStage {
 
         dnd.addTarget(new DragAndDrop.Target(boardLayout) {
             @Override
-            public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+            public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x,
+                                float y, int pointer) {
 //                getActor().addAction(Actions.color(Color.FIREBRICK, 0.5f));
                 return true;
             }
 
             @Override
-            public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+            public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y,
+                             int pointer) {
                 boardLayout.addActorGroup(source.getActor());
 //                player1DeckLayout.removeActor(source.getActor());
                 player1DeckLayout.pack();
@@ -213,13 +205,15 @@ public class GameStage extends BasicStage {
         });
         dnd.addTarget(new DragAndDrop.Target(player1DeckLayout) {
             @Override
-            public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+            public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x,
+                                float y, int pointer) {
 //                getActor().addAction(Actions.color(Color.FIREBRICK, 0.5f));
                 return true;
             }
 
             @Override
-            public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+            public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y,
+                             int pointer) {
                 player1DeckLayout.addActor(source.getActor());
                 player1DeckLayout.pack();
             }
@@ -227,42 +221,84 @@ public class GameStage extends BasicStage {
 
         dnd.addTarget(new DragAndDrop.Target(player2DeckLayout) {
             @Override
-            public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+            public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x,
+                                float y, int pointer) {
 //                getActor().addAction(Actions.color(Color.FIREBRICK, 0.5f));
                 return true;
             }
 
 
             @Override
-            public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y, int pointer) {
+            public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y,
+                             int pointer) {
                 player2DeckLayout.addActor(source.getActor());
             }
         });
 
-        player1DeckLayout.wrap().align(Align.center).wrapSpace(10).space(10);
-        player2DeckLayout.wrap().align(Align.center).wrapSpace(10).space(10);
+        player1DeckLayout.wrap().
+
+                align(Align.center).
+
+                wrapSpace(10).
+
+                space(10);
+        player2DeckLayout.wrap().
+
+                align(Align.center).
+
+                wrapSpace(10).
+
+                space(10);
 
         player1DeckLayout.setFillParent(false);
         player1DeckLayout.setTouchable(Touchable.enabled);
         player2DeckLayout.setTouchable(Touchable.enabled);
         layout.add(topMenu).top().expandX().fillX().row();
-        layout.add(statusPlayer2Layout).top().expandX().fillX().align(Align.left).padTop(Value.percentHeight(.1f)).row();
-        layout.add(player2DeckLayout).expandX().fillX().height(Value.percentHeight(1.1f, deckEntity.getCard(Suit.Clubs, Pip.Jack))).top().row();
-        layout.add(boardLayout).fill().expand().row();
-        layout.add(player1DeckLayout).expandX().fillX().height(Value.percentHeight(1.1f, deckEntity.getCard(Suit.Clubs, Pip.Jack))).bottom().row();
-        layout.add(statusPlayer1Layout).bottom().expandX().align(Align.left).fillX().padTop(Value.percentHeight(.1f)).row();
-        layout.add(bottomMenu).bottom().expandX().fill();
-        addActor(layout);
-        addActor(actionLayout);
-        addActor(remainerDeckLayout);
+        layout.add(statusPlayer2Layout).
+                top().
+                expandX().
+                fillX().
+                align(Align.left).
+                padTop(Value.percentHeight(.1f)).
+                row();
+        layout.add(player2DeckLayout).
+                expandX().
+                fillX().
+                height(Value.percentHeight(1.1f, deckEntity.getCard(Suit.Clubs, Pip.Jack))).
+                top().
+                row();
+        layout.add(boardLayout).
+                fill().
+                expand().
+                row();
+        layout.add(player1DeckLayout).
+                expandX().
+                fillX().
+                height(Value.percentHeight(1.1f, deckEntity.getCard(Suit.Clubs, Pip.Jack))).
+                bottom().
+                row();
+        layout.add(statusPlayer1Layout).
+                bottom().
+                expandX().
+                align(Align.left).
+                fillX().
+                padTop(Value.percentHeight(.1f)).
+                row();
+        layout.add(bottomMenu).
+                bottom().
+                expandX().
+                fill();
 
-        for (CardEntity card : cards) {
-//            card.setPositionBefore(card.getX(), card.getY());
-//            player1DeckLayout.addActor(card);
-            Vector2 v = card.localToStageCoordinates(new Vector2(10, 10));
-//            card.setPositionAfter(v.x, v.y)
-//            card.addAction(Actions.moveBy(card.getXafter(),card.getYafter(), 10f));
-        }
+        addActor(layout);
+
+        addActor(actionLayout);
+
+        addActor(remainerDeckLayout);
+        boardLayout.toBack();
+        mainActionSequence.addAction(remainerDeckLayout.enterAnimation());
+        dealCards();
+        mainActionSequence.addAction(actionLayout.confirmP1());
+        addAction(mainActionSequence);
     }
 
 
@@ -289,7 +325,84 @@ public class GameStage extends BasicStage {
         remainerDeckLayout.resize(width, height);
     }
 
-    public void dealCards() {
+    private void dealCards() {
+        SequenceAction dealCardsAnimation = new SequenceAction();
+        dealCardsAnimation.addAction(
+                Actions.delay(0)
+        );
+        dealCardsAnimation.addAction(
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (final Card card : player1.getHand().getDeck())
+                            deckEntity.getCard(card).catchBeforePosition();
+                        for (final Card card : player2.getHand().getDeck())
+                            deckEntity.getCard(card).catchBeforePosition();
+                    }
+                })
+        );
+        dealCardsAnimation.addAction(
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        player1DeckLayout.setUp();
+                        player2DeckLayout.setUp();
 
+                        for (final Card card : player1.getHand().getDeck())
+                            deckEntity.getCard(card).setVisible(false);
+                        for (final Card card : player2.getHand().getDeck())
+                            deckEntity.getCard(card).setVisible(false);
+                    }
+                })
+        );
+
+
+        dealCardsAnimation.addAction(
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (final Card card : player1.getHand().getDeck()) {
+                            deckEntity.getCard(card).catchAfterPosition();
+                            deckEntity.getCard(card).restoreMove();
+                            deckEntity.getCard(card).setVisible(true);
+                        }
+                        for (final Card card : player2.getHand().getDeck()) {
+                            deckEntity.getCard(card).catchAfterPosition();
+                            deckEntity.getCard(card).restoreMove();
+                            deckEntity.getCard(card).setVisible(true);
+                        }
+                    }
+                })
+        );
+        for (int i = 0; i < 5; i++) {
+            final int finalI = i;
+            dealCardsAnimation.addAction(
+                    Actions.run(new Runnable() {
+                        @Override
+                        public void run() {
+                            Card card1 = player1.getHand().getDeck().get(finalI);
+                            deckEntity.getCard(card1).moveAction();
+                        }
+                    })
+            );
+            dealCardsAnimation.addAction(
+                    Actions.delay(0.25f)
+            );
+            dealCardsAnimation.addAction(
+                    Actions.run(new Runnable() {
+                        @Override
+                        public void run() {
+                            Card card2 = player2.getHand().getDeck().get(finalI);
+                            deckEntity.getCard(card2).moveAction();
+                        }
+                    })
+            );
+        }
+        dealCardsAnimation.addAction(
+                Actions.delay(0.25f)
+        );
+
+        mainActionSequence.addAction(dealCardsAnimation);
     }
+
 }

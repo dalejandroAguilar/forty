@@ -15,5 +15,4 @@ public class Constants {
     public static final int HEIGHT3x = 1620 * 3 ;
     public static final int WIDTH4x = 650 * 4 ;
     public static final int HEIGHT4x = 1620 * 4 ;
-
 }

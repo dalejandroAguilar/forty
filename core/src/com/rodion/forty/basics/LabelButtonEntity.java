@@ -62,6 +62,10 @@ public class LabelButtonEntity extends Layout {
 
     public void action() throws Exception {}
 
+    public void setText(String st){
+        label.setText(st);
+    }
+
 
     @Override
     public void resize(int width, int height) {

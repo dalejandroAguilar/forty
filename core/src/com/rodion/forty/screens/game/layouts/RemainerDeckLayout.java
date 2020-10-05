@@ -1,6 +1,9 @@
 package com.rodion.forty.screens.game.layouts;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.rodion.forty.basics.BasicStage;
@@ -28,10 +31,26 @@ public class RemainerDeckLayout extends Layout {
         }
     }
 
-    //    @Override
-//    public void resize(int width, int height) {
-//        super.resize(width, height);
-//        for(CardEntity obj : deck)
-//            obj.resize(width, height);
-//    }
+    public SequenceAction enterAnimation() {
+        SequenceAction sequence = new SequenceAction();
+        final float delta = Gdx.graphics.getWidth();
+        sequence.addAction(
+                Actions.run(new Runnable() {
+                    @Override
+                    public void run() {
+                        moveBy(delta, 0);
+                        addAction(
+                                Actions.parallel(
+                                        Actions.moveBy(-delta, 0, .5f)
+//                                        Actions.rotateBy(90, .5f)
+                                )
+                        );
+                    }
+                })
+        );
+        sequence.addAction(
+                Actions.delay(.5f)
+        );
+        return sequence;
+    }
 }

@@ -21,10 +21,7 @@ public class PlayerHandLayout extends HorizontalGroup {
         for (Card card : player.getHand().getDeck()) {
             addActor(deckEntity.getCard(card));
         }
-
     }
-
-
 
     public void resize(int width, int height) {
 
