@@ -10,11 +10,11 @@ public class Card {
         this.palo=palo;
     }
 
-    public Suit getPalo() {
+    public Suit getSuit() {
         return palo;
     }
 
-    public Pip getNumero() {
+    public Pip getPip() {
         return numero;
     }
 

@@ -1,15 +1,11 @@
 package com.rodion.forty.screens.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.rodion.forty.MainGame;
@@ -31,8 +27,6 @@ import com.rodion.forty.screens.game.layouts.PlayerHandLayout;
 import com.rodion.forty.screens.game.layouts.RemainerDeckLayout;
 import com.rodion.forty.screens.game.layouts.StatusLayout;
 
-import java.util.ArrayList;
-
 public class GameStage extends BasicStage {
     private DeckEntity deckEntity;
     private BoardLayout boardLayout;
@@ -51,12 +45,15 @@ public class GameStage extends BasicStage {
     private Player player2;
     private SequenceAction mainActionSequence;
 
-//    pr
-
-
     public GameStage(Viewport viewport, BasicScreen basicScreen) throws Exception {
         super(viewport, basicScreen);
-        deckEntity = new DeckEntity(this);
+        deckEntity = new DeckEntity(this){
+            @Override
+            public void cardAction(CardEntity cardEntity) {
+                super.cardAction(cardEntity);
+                player1DeckLayout.selectCard(cardEntity);
+            }
+        };
         mainActionSequence = new SequenceAction();
 
         player1 = new Player();
@@ -66,7 +63,21 @@ public class GameStage extends BasicStage {
         team2 = new Team(player2);
 
         game = new Game(team1, team2);
-        player1DeckLayout = new PlayerHandLayout(player1, deckEntity);
+        player1DeckLayout = new PlayerHandLayout(player1, deckEntity){
+            @Override
+            public void selectCard(CardEntity cardSelect) {
+                super.selectCard(cardSelect);
+                System.out.println("SELECT");
+            }
+
+            @Override
+            public void onBoardAction() {
+                super.onBoardAction();
+                System.out.println("onBoard");
+                player1DeckLayout.setTouchable(Touchable.disabled);
+                actionLayout.showPass();
+            }
+        };
         player2DeckLayout = new PlayerHandLayout(player2, deckEntity);
 //        player1DeckLayout.toFront();
 
@@ -79,10 +90,9 @@ public class GameStage extends BasicStage {
             card1.setBack(1);
             remainerDeckLayout.addCard(card1);
         }
-        remainerDeckLayout.addCard(deckEntity.getCard(Suit.Clubs, Pip.Jack));
+//        remainerDeckLayout.addCard(deckEntity.getCard(Suit.Clubs, Pip.Jack));
 
-
-        actionLayout = new ActionLayout(this){
+        actionLayout = new ActionLayout(this) {
             @Override
             public void onConfirm() {
                 super.onConfirm();
@@ -91,26 +101,43 @@ public class GameStage extends BasicStage {
                                 new Runnable() {
                                     @Override
                                     public void run() {
-                                        System.out.println("Confirm");
+                                        player1DeckLayout.flipUp();
+                                        player1DeckLayout.enabled();
+                                        actionLayout.exitConfirm();
+                                        player1DeckLayout.updateDnD(boardLayout);
                                     }
                                 }
                         )
                 );
             }
+
+            @Override
+            public void onPass() {
+                super.onPass();
+                player1DeckLayout.flipDown();
+                player2DeckLayout.flipUp();
+                player2DeckLayout.setTouchable(Touchable.enabled);
+
+            }
         };
 
+
         Layout layout = new Layout(this);
-        boardLayout = new BoardLayout(this);
+        boardLayout = new BoardLayout(this){
+            @Override
+            public void action() {
+                super.action();
+                CardEntity card = player1DeckLayout.getCardSelect();
+                if(card!=null)
+                    boardLayout.addActorGroup(card);
+            }
+        };
 
         boardLayout.setTouchable(Touchable.enabled);
 
-        statusPlayer1Layout = new
+        statusPlayer1Layout = new StatusLayout(this);
 
-                StatusLayout(this);
-
-        statusPlayer2Layout = new
-
-                StatusLayout(this);
+        statusPlayer2Layout = new StatusLayout(this);
 
         settingsButton = new ImageButtonEntity() {
             @Override
@@ -142,102 +169,12 @@ public class GameStage extends BasicStage {
         backButton.prepareAssets();
 
         Table topMenu = new Table();
-        topMenu.setBackground(
-                getParentScreen().
-                        getMainGame().grayBg);
+        topMenu.setBackground(getParentScreen().getMainGame().grayBg);
         topMenu.add(backButton).left();
 
         Table bottomMenu = new Table();
-        bottomMenu.setBackground(
-                getParentScreen().
-                        getMainGame().grayBg);
+        bottomMenu.setBackground(getParentScreen().getMainGame().grayBg);
         bottomMenu.add(settingsButton);
-
-        final DragAndDrop dnd = new DragAndDrop();
-        dnd.setDragActorPosition(-deckEntity.getCard(Suit.Clubs, Pip.Jack).
-
-                getWidth(), 0);
-
-        for (
-                Suit suit : Suit.values()) {
-            for (Pip pip : Pip.values()) {
-                dnd.addSource(new DragAndDrop.Source(deckEntity.getCard(suit, pip)) {
-                    final DragAndDrop.Payload payload = new DragAndDrop.Payload();
-
-                    @Override
-                    public DragAndDrop.Payload dragStart(InputEvent event, float x, float y, int pointer) {
-                        payload.setDragActor(getActor());
-//                player1DeckLayout.getCell(getActor()).clearActor();
-                        player1DeckLayout.invalidate();
-//                player1DeckLayout.removeActor(getActor());
-//                        getCells().removeValue(player1DeckLayout.getCell(getActor()),true);
-                        player1DeckLayout.pack();
-                        getActor().addAction(Actions.color(Color.YELLOW, 0.5f));
-                        dnd.setDragActorPosition(-x + getActor().getWidth(), -y);
-                        return payload;
-                    }
-
-                    @Override
-                    public void dragStop(InputEvent event, float x, float y, int pointer, DragAndDrop.Payload payload, DragAndDrop.Target target) {
-                        super.dragStop(event, x, y, pointer, payload, target);
-                        getActor().addAction(Actions.color(Color.WHITE, 0.5f));
-
-                        if (target == null) {
-                            player1DeckLayout.addActor(getActor());
-                        }
-                    }
-                });
-            }
-        }
-
-        dnd.addTarget(new DragAndDrop.Target(boardLayout) {
-            @Override
-            public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x,
-                                float y, int pointer) {
-//                getActor().addAction(Actions.color(Color.FIREBRICK, 0.5f));
-                return true;
-            }
-
-            @Override
-            public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y,
-                             int pointer) {
-                boardLayout.addActorGroup(source.getActor());
-//                player1DeckLayout.removeActor(source.getActor());
-                player1DeckLayout.pack();
-//                player1DeckLayout.getCells().removeValue(player1DeckLayout.getCell(source.getActor()),true);
-            }
-        });
-        dnd.addTarget(new DragAndDrop.Target(player1DeckLayout) {
-            @Override
-            public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x,
-                                float y, int pointer) {
-//                getActor().addAction(Actions.color(Color.FIREBRICK, 0.5f));
-                return true;
-            }
-
-            @Override
-            public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y,
-                             int pointer) {
-                player1DeckLayout.addActor(source.getActor());
-                player1DeckLayout.pack();
-            }
-        });
-
-        dnd.addTarget(new DragAndDrop.Target(player2DeckLayout) {
-            @Override
-            public boolean drag(DragAndDrop.Source source, DragAndDrop.Payload payload, float x,
-                                float y, int pointer) {
-//                getActor().addAction(Actions.color(Color.FIREBRICK, 0.5f));
-                return true;
-            }
-
-
-            @Override
-            public void drop(DragAndDrop.Source source, DragAndDrop.Payload payload, float x, float y,
-                             int pointer) {
-                player2DeckLayout.addActor(source.getActor());
-            }
-        });
 
         player1DeckLayout.wrap().
                 align(Align.center).
@@ -353,7 +290,6 @@ public class GameStage extends BasicStage {
                     }
                 })
         );
-
 
         dealCardsAnimation.addAction(
                 Actions.run(new Runnable() {

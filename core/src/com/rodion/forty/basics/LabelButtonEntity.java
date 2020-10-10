@@ -21,7 +21,22 @@ public class LabelButtonEntity extends Layout {
         setTouchable(Touchable.enabled);
         setBackground(enableColor);
 
-        add(label).pad(Value.percentHeight(0.2f,label));
+        add(label).pad(Value.percentHeight(0.2f, label));
+
+        addListener(new ClickListener() {
+                        boolean isPressed;
+                        boolean isClicked;
+
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            try {
+                                action();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+        );
 
         addListener(new ClickListener() {
                         boolean isPressed;
@@ -29,22 +44,22 @@ public class LabelButtonEntity extends Layout {
 
                         @Override
                         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                            isPressed = true;
-                            isClicked = false;
-                            addAction(Actions.color(Color.GRAY, .2f));
+                            if (button == 0) {
+                                isPressed = true;
+                                isClicked = false;
+                                addAction(Actions.color(Color.GRAY, .2f));
+                            }
                             return true;
                         }
 
                         @Override
                         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                            super.touchUp(event, x, y, pointer, button);
-                            addAction(Actions.color(Color.WHITE, .2f));
-                            if (isPressed) {
-                                try {
-                                    action();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                            if (button == 0) {
+                                super.touchUp(event, x, y, pointer, button);
+                                addAction(Actions.color(Color.WHITE, .2f));
+//                            if (isPressed) {
+//
+//                            }
                             }
                         }
 
@@ -60,9 +75,10 @@ public class LabelButtonEntity extends Layout {
         );
     }
 
-    public void action() throws Exception {}
+    public void action() throws Exception {
+    }
 
-    public void setText(String st){
+    public void setText(String st) {
         label.setText(st);
     }
 

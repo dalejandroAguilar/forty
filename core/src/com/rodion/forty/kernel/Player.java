@@ -16,7 +16,7 @@ public class Player {
 
     public int turno(Card c, Deck mazo){
         int retorno=0;
-        int valor=c.getNumero().getValue();
+        int valor=c.getPip().getValue();
         ArrayList<Deck> opciones=mazo.buscarSuma(valor);
         Deck aux= mazo.buscarEscalera(valor);
         if (aux != null){

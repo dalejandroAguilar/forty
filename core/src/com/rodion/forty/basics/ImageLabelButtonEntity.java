@@ -75,7 +75,7 @@ public class ImageLabelButtonEntity extends Layout {
         );
     }
 
-    private void action(){}
+    public void action(){}
 
 
     public void prepareAssets() {

@@ -53,6 +53,12 @@ public class ActionLayout extends Layout {
                 assetPath = "icons";
                 assetName = "pass";
             }
+
+            @Override
+            public void action() {
+                super.action();
+                onPass();
+            }
         };
         passButton.prepareAssets();
 //        passButton.setVisible(false);
@@ -92,8 +98,34 @@ public class ActionLayout extends Layout {
         return sequence;
     }
 
+    public void exitConfirm(){
+        messageLabel.addAction(
+                Actions.run(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                messageEntity.setVisible(false);
+                            }
+                        }
+                )
+        );
+
+    }
+
+//    public void
+
     public void onConfirm(){
     }
+
+    public void showPass(){
+        passButton.setVisible(true);
+    }
+
+    public void onPass(){
+
+    }
+
+
 
 
 }

@@ -179,5 +179,6 @@ public class TriphaseImageEntity extends Image {
 
     public void setStatus(int status) {
         this.status = status;
+        update();
     }
 }

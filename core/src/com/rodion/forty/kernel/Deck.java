@@ -25,7 +25,7 @@ public class Deck {
 
     public Card buscarPar(int valor){
         for (Card c:this.deck) {
-            if (c.getNumero().getValue()==valor){
+            if (c.getPip().getValue()==valor){
                 return c;
             }
         }
@@ -47,10 +47,10 @@ public class Deck {
     public ArrayList<Deck> buscarSuma(int valor){
         ArrayList<Deck> retorno=new ArrayList<>();
         for (Card c:this.deck) {
-            int valor1=c.getNumero().getValue();
+            int valor1=c.getPip().getValue();
             if( valor1<4){
                 for (Card comp:this.deck) {
-                    int valor2=comp.getNumero().getValue();
+                    int valor2=comp.getPip().getValue();
                     if(valor1!=valor2 && valor1+valor2==valor){
                         Deck a = buscarEscalera(valor+1);
                         a.deck.add(c);

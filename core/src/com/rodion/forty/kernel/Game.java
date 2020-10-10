@@ -59,7 +59,7 @@ public class Game {
         int resultado=jug.turno(a,this.mazo);
         if(resultado!=0){
             eq.incrementarCartas(resultado);
-            if(a.getNumero()==cartaAnteriro.getNumero())
+            if(a.getPip()==cartaAnteriro.getPip())
                 eq.incrementarPuntaje(2);
             else if(this.mazo.getDeck().size()==0 && eq.getPuntaje()>38){
                 eq.incrementarPuntaje(2);

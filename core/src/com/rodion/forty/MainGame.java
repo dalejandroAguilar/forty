@@ -169,8 +169,5 @@ public class MainGame extends Game {
         labelStyle200x = new Label.LabelStyle(bitmapFont200x, Color.WHITE);
         labelStyle300x = new Label.LabelStyle(bitmapFont300x, Color.WHITE);
         labelStyle400x = new Label.LabelStyle(bitmapFont400x, Color.WHITE);
-
     }
-
 }
-

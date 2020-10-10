@@ -18,6 +18,12 @@ public class DeckEntity {
                         setAssetManager(basicStage.getParentScreen().getMainGame().amGame);
                         super.setAssetAddress();
                     }
+
+                    @Override
+                    public void action(CardEntity cardEntity) {
+                        super.action(cardEntity);
+                        cardAction(cardEntity);
+                    }
                 };
             }
         }
@@ -28,7 +34,7 @@ public class DeckEntity {
     }
 
     public CardEntity getCard(Card card){
-        return cards[card.getPalo().index][card.getNumero().index];
+        return cards[card.getSuit().index][card.getPip().index];
     }
 
     public void resize(int width, int height){
@@ -37,5 +43,8 @@ public class DeckEntity {
                 cards[suit.index][pip.index].resize(width, height);
             }
         }
+    }
+    public void cardAction(CardEntity cardEntity){
+
     }
 }

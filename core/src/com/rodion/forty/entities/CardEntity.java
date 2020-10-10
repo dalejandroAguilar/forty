@@ -4,9 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.rodion.forty.basics.SwitchImageEntity;
+import com.badlogic.gdx.utils.Align;
 import com.rodion.forty.basics.TriphaseImageEntity;
-import com.rodion.forty.kernel.Card;
 import com.rodion.forty.kernel.Pip;
 import com.rodion.forty.kernel.Suit;
 
@@ -20,13 +19,14 @@ public class CardEntity extends TriphaseImageEntity {
         super();
         this.pip = pip;
         this.suit = suit;
+        final CardEntity cardEntity = this;
         prepareAssets();
         addListener(new ClickListener() {
                         boolean isPressed;
                         boolean isClicked;
                         @Override
                         public void clicked(InputEvent event, float x, float y) {
-                            action();
+                            action(cardEntity);
                         }
                     }
         );
@@ -46,11 +46,12 @@ public class CardEntity extends TriphaseImageEntity {
         assetName3 = "back2";
     }
 
-    public void action() {
-        status++;
-        if (status == 3)
-            status = 0;
-        update();
+    public void action(CardEntity cardEntity) {
+//        cardEntity = this;
+//        update();
+//        status++;
+//        if (status == 3)
+//            status = 0;
     }
 
     public void setPositionBefore(float x, float y){
@@ -75,7 +76,7 @@ public class CardEntity extends TriphaseImageEntity {
 
     public void moveAction(){
         float deltax = xafter-xbefore, deltay =  yafter-ybefore;
-        addAction(Actions.moveBy(deltax,deltay,0.5f));
+        addAction(Actions.moveBy(deltax,deltay,0.25f));
     }
 
     public void restoreMove(){
@@ -106,5 +107,53 @@ public class CardEntity extends TriphaseImageEntity {
     public void setBack(int back) {
         this.back = back;
         setStatus(back);
+    }
+
+    public void flipUp(){
+         setOrigin(Align.center);
+        addAction(Actions.sequence(
+                Actions.scaleTo(0,1,.25f),
+                Actions.run(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                setStatus(0);
+                            }
+                        }
+                ),
+                Actions.scaleTo(1,1,.25f)
+        ));
+    }
+
+    public void flipDown(){
+         setOrigin(Align.center);
+        addAction(Actions.sequence(
+                Actions.scaleTo(0,1,.25f),
+                Actions.run(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                setStatus(getBack());
+                            }
+                        }
+                ),
+                Actions.scaleTo(1,1,.25f)
+        ));
+    }
+
+    public Pip getPip() {
+        return pip;
+    }
+
+    public void setPip(Pip pip) {
+        this.pip = pip;
+    }
+
+    public Suit getSuit() {
+        return suit;
+    }
+
+    public void setSuit(Suit suit) {
+        this.suit = suit;
     }
 }
