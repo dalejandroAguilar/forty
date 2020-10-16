@@ -16,4 +16,7 @@ public class MessageEntity extends Layout {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, 0.75f);
     }
+
+
 }
+

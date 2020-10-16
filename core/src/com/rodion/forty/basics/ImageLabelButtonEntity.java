@@ -25,8 +25,8 @@ public class ImageLabelButtonEntity extends Layout {
     protected AssetManager assetManager;
     int align;
 
-//    public ImageLabelButtonEntity(String text, TextureRegionDrawable enableColor, BasicStage basicStage) {
-    public ImageLabelButtonEntity(int  align, TextureRegionDrawable enableColor, BasicStage basicStage, String ... texts) {
+    //    public ImageLabelButtonEntity(String text, TextureRegionDrawable enableColor, BasicStage basicStage) {
+    public ImageLabelButtonEntity(int align, TextureRegionDrawable enableColor, BasicStage basicStage, String... texts) {
         super(basicStage);
         this.enableColor = enableColor;
         this.align = align;
@@ -35,7 +35,7 @@ public class ImageLabelButtonEntity extends Layout {
         setTouchable(Touchable.enabled);
         setBackground(enableColor);
 //        debug();
-        for(String text : texts) {
+        for (String text : texts) {
             labels.add(new LabelEntity(text, this));
             labels.get(labels.size() - 1).setAlignment(align);
             add(labels.get(labels.size() - 1)).expandX().fillX().row();
@@ -47,35 +47,56 @@ public class ImageLabelButtonEntity extends Layout {
                         boolean isClicked;
 
                         @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            try {
+                                action();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+        );
+
+        addListener(new ClickListener() {
+                        boolean isPressed;
+                        boolean isClicked;
+
+                        @Override
                         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                            isPressed = true;
-                            isClicked = false;
-                            addAction(Actions.color(Color.GRAY, .2f));
+                            if (button == 0) {
+                                isPressed = true;
+                                isClicked = false;
+                                addAction(Actions.color(Color.GRAY, .2f));
+                            }
                             return true;
                         }
 
                         @Override
                         public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                            super.touchUp(event, x, y, pointer, button);
-                            addAction(Actions.color(Color.WHITE, .2f));
-                            if (isPressed) {
-                                action();
+                            if (button == 0) {
+                                super.touchUp(event, x, y, pointer, button);
+                                addAction(Actions.color(Color.WHITE, .2f));
+//                            if (isPressed) {
+//                                action();
+//                            }
                             }
                         }
 
                         @Override
                         public void touchDragged(InputEvent event, float x, float y, int pointer) {
                             super.touchDragged(event, x, y, pointer);
-                            if (!isOver() && isPressed) {
-                                addAction(Actions.color(Color.WHITE, .2f));
-                                isPressed = false;
-                            }
+                                if (!isOver() && isPressed) {
+                                    addAction(Actions.color(Color.WHITE, .2f));
+                                    isPressed = false;
+                                }
+
                         }
                     }
         );
     }
 
-    public void action(){}
+    public void action() {
+    }
 
 
     public void prepareAssets() {
@@ -98,13 +119,13 @@ public class ImageLabelButtonEntity extends Layout {
         texture400 = new TextureRegionDrawable(atlas.findRegion(assetName));
     }
 
-    public void setAssetAddress(){
+    public void setAssetAddress() {
 
     }
 
 
     public void resize(int width, int height) {
-        for (LabelEntity label: labels)
+        for (LabelEntity label : labels)
             label.resize(width, height);
         if (width <= Constants.WIDTH50x || height <= Constants.HEIGHT50x) {
             resize50();

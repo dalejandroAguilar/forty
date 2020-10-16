@@ -232,7 +232,16 @@ public class GameStage extends BasicStage {
         boardLayout.toBack();
         mainActionSequence.addAction(remainerDeckLayout.enterAnimation());
         dealCards();
-        mainActionSequence.addAction(actionLayout.confirmP1());
+        mainActionSequence.addAction(
+                Actions.run(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                actionLayout.confirmP1();
+                            }
+                        }
+                )
+        );
         addAction(mainActionSequence);
     }
 

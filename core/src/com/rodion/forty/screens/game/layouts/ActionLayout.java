@@ -1,5 +1,7 @@
 package com.rodion.forty.screens.game.layouts;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
@@ -21,7 +23,7 @@ public class ActionLayout extends Layout {
         super(basicStage);
         messageEntity = new MessageEntity(basicStage);
         messageLabel = new LabelEntity("Comenzar turno", this);
-        button = new LabelButtonEntity("Listo", basicStage.getParentScreen().getMainGame().greenBg, basicStage){
+        button = new LabelButtonEntity("Listo", basicStage.getParentScreen().getMainGame().greenBg, basicStage) {
             @Override
             public void action() throws Exception {
                 super.action();
@@ -82,31 +84,23 @@ public class ActionLayout extends Layout {
         button.resize(width, height);
     }
 
-    public SequenceAction confirmP1() {
-        SequenceAction sequence = new SequenceAction();
-        sequence.addAction(
-                Actions.run(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                messageLabel.setText("Jugador 1 ¿Estás listo?");
-                                messageEntity.setVisible(true);
-                            }
-                        }
-                )
-        );
-        return sequence;
+    public void confirmP1() {
+        messageLabel.setText("Jugador 1 ¿Estás listo?");
+        messageEntity.setVisible(true);
+        messageEntity.moveBy(0, -100);
+        messageEntity.getColor().a = 0f;
+        messageEntity.addAction(Actions.parallel(
+//                Actions.fadeOut(0),
+                Actions.fadeIn(.25f),
+                Actions.moveBy(0, 0, .25f)
+        ));
     }
 
-    public void exitConfirm(){
-        messageLabel.addAction(
-                Actions.run(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                messageEntity.setVisible(false);
-                            }
-                        }
+    public void exitConfirm() {
+        messageEntity.addAction(
+                Actions.parallel(
+                        Actions.fadeOut(.25f),
+                        Actions.moveBy(0, -100, .25f)
                 )
         );
 
@@ -114,18 +108,18 @@ public class ActionLayout extends Layout {
 
 //    public void
 
-    public void onConfirm(){
+    public void onConfirm() {
     }
 
-    public void showPass(){
+    public void showPass() {
+        float delta = passButton.getWidth();
+        passButton.moveBy(delta, 0);
         passButton.setVisible(true);
+        passButton.addAction(Actions.moveBy(-delta, 0, 0.25f));
     }
 
-    public void onPass(){
+    public void onPass() {
 
     }
-
-
-
 
 }
