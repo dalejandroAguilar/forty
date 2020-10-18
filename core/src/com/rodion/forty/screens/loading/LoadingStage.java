@@ -8,6 +8,7 @@ import com.rodion.forty.basics.Constants;
 import com.rodion.forty.basics.ImageEntity;
 import com.rodion.forty.basics.LabelEntity;
 import com.rodion.forty.basics.Layout;
+import com.rodion.forty.utilities.AssetManagerMaster;
 
 public class LoadingStage extends BasicStage {
     private Layout layout;
@@ -24,7 +25,7 @@ public class LoadingStage extends BasicStage {
         loadingIconEntity = new AnimatedEntity(4){
             @Override
             public void setAssetAddress() {
-                setAssetManager(getParentScreen().getMainGame().assetManagerLoading);
+                setAssetManager(AssetManagerMaster.loading);
                 assetPath = "loading";
                 assetName = "loading";
             }

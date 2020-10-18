@@ -6,6 +6,7 @@ import com.rodion.forty.basics.BasicStage;
 import com.rodion.forty.basics.ImageEntity;
 import com.rodion.forty.basics.LabelEntity;
 import com.rodion.forty.basics.Layout;
+import com.rodion.forty.utilities.AssetManagerMaster;
 
 public class StatusLayout extends Layout {
     private ImageEntity scoreImage;
@@ -25,7 +26,7 @@ public class StatusLayout extends Layout {
         userImage = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                setAssetManager(basicStage.getParentScreen().getMainGame().amGame);
+                setAssetManager(AssetManagerMaster.game);
                 assetPath = "icons";
                 assetName = "player";
             }
@@ -34,7 +35,7 @@ public class StatusLayout extends Layout {
         scoreImage = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                setAssetManager(basicStage.getParentScreen().getMainGame().amGame);
+                setAssetManager(AssetManagerMaster.game);
                 assetPath = "icons";
                 assetName = "dog";
             }
@@ -43,7 +44,7 @@ public class StatusLayout extends Layout {
         cardNumberImage = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                setAssetManager(basicStage.getParentScreen().getMainGame().amGame);
+                setAssetManager(AssetManagerMaster.game);
                 assetPath = "icons";
                 assetName = "card";
             }

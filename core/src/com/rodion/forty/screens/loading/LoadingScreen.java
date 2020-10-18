@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.rodion.forty.MainGame;
 import com.rodion.forty.basics.BasicScreen;
 import com.rodion.forty.screens.title.TitleScreen;
+import com.rodion.forty.utilities.AssetManagerMaster;
 
 public class LoadingScreen extends BasicScreen {
 
@@ -43,7 +44,7 @@ public class LoadingScreen extends BasicScreen {
 //            hide();
 //        }
 
-        if (mainGame.assetManagerTitle.update() && mainGame.amGame.update()) {
+        if (AssetManagerMaster.title.update() && AssetManagerMaster.game.update()) {
             mainGame.titleScreen = new TitleScreen(mainGame);
             mainGame.setScreen(mainGame.titleScreen);
             hide();

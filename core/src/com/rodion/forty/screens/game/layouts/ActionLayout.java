@@ -11,6 +11,7 @@ import com.rodion.forty.basics.LabelButtonEntity;
 import com.rodion.forty.basics.LabelEntity;
 import com.rodion.forty.basics.Layout;
 import com.rodion.forty.basics.MessageEntity;
+import com.rodion.forty.utilities.AssetManagerMaster;
 
 public class ActionLayout extends Layout {
     ImageLabelButtonEntity takeButton;
@@ -38,7 +39,7 @@ public class ActionLayout extends Layout {
                 "Take", "card") {
             @Override
             public void setAssetAddress() {
-                setAssetManager(getParentStage().getParentScreen().getMainGame().amGame);
+                setAssetManager(AssetManagerMaster.game);
                 assetPath = "icons";
                 assetName = "take";
             }
@@ -51,7 +52,7 @@ public class ActionLayout extends Layout {
                 , "Pass", "turn") {
             @Override
             public void setAssetAddress() {
-                setAssetManager(getParentStage().getParentScreen().getMainGame().amGame);
+                setAssetManager(AssetManagerMaster.game);
                 assetPath = "icons";
                 assetName = "pass";
             }

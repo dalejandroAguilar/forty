@@ -8,6 +8,7 @@ import com.rodion.forty.MainGame;
 import com.rodion.forty.basics.BasicScreen;
 import com.rodion.forty.basics.BlackStage;
 import com.rodion.forty.screens.loading.LoadingScreen;
+import com.rodion.forty.utilities.AssetManagerMaster;
 
 public class LaunchScreen extends BasicScreen {
     private LaunchStage stage;
@@ -64,7 +65,7 @@ public class LaunchScreen extends BasicScreen {
                                 new Runnable() {
                                     @Override
                                     public void run() {
-                                        while (!mainGame.assetManagerLoading.update()){
+                                        while (!AssetManagerMaster.loading.update()){
                                         };
                                         mainGame.loadingScreen = new LoadingScreen(mainGame);
                                         mainGame.setScreen(mainGame.loadingScreen);

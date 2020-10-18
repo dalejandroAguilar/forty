@@ -8,6 +8,7 @@ import com.rodion.forty.basics.ImageEntity;
 import com.rodion.forty.basics.LabelButtonEntity;
 import com.rodion.forty.basics.Layout;
 import com.rodion.forty.screens.game.GameScreen;
+import com.rodion.forty.utilities.AssetManagerMaster;
 
 
 public class TitleStage extends BasicStage {
@@ -19,7 +20,7 @@ public class TitleStage extends BasicStage {
         title  = new ImageEntity() {
             @Override
             public void setAssetAddress() {
-                setAssetManager(getParentScreen().getMainGame().assetManagerTitle);
+                setAssetManager(AssetManagerMaster.title);
                 assetPath = "title";
                 assetName = "logo";
             }

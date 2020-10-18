@@ -26,6 +26,7 @@ import com.rodion.forty.screens.game.layouts.BoardLayout;
 import com.rodion.forty.screens.game.layouts.PlayerHandLayout;
 import com.rodion.forty.screens.game.layouts.RemainerDeckLayout;
 import com.rodion.forty.screens.game.layouts.StatusLayout;
+import com.rodion.forty.utilities.AssetManagerMaster;
 
 public class GameStage extends BasicStage {
     private DeckEntity deckEntity;
@@ -142,7 +143,7 @@ public class GameStage extends BasicStage {
         settingsButton = new ImageButtonEntity() {
             @Override
             public void setAssetAddress() {
-                setAssetManager(getParentScreen().getMainGame().amGame);
+                setAssetManager(AssetManagerMaster.game);
                 assetPath = "icons";
                 assetName = "settings";
             }
@@ -152,7 +153,7 @@ public class GameStage extends BasicStage {
         backButton = new ImageButtonEntity() {
             @Override
             public void setAssetAddress() {
-                setAssetManager(getParentScreen().getMainGame().amGame);
+                setAssetManager(AssetManagerMaster.game);
                 assetPath = "icons";
                 assetName = "back";
             }
